@@ -1,0 +1,27 @@
+{
+  "name": "default-js.github.io",
+  "version": "1.0.0",
+  "description": "You can use the [editor on GitHub](https://github.com/default-js/default-js.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/default-js/default-js.github.io.git"
+  },
+  "keywords": [
+    "@default-js",
+    "page"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/default-js/default-js.github.io/issues"
+  },
+  "homepage": "https://github.com/default-js/default-js.github.io#readme",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
