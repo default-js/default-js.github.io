@@ -13,6 +13,19 @@
     <i class="fab fa-fort-awesome">default-js</i> Page
   </h1>
 
+  <d-application>
+    <nav>
+      <d-route name="defaultjs-extdom" template="https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md">defaultjs-extdom</d-route>
+      <d-route name="view-2" template="#view-2" stateful>view-2</d-route>
+      <d-route name="view-3" template="templates/view-3.tpl.html" stateful>view-3</d-route>
+    </nav>
+    <d-view>
+
+    </d-view>
+
+    <x-github-markdown-render-service src="https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md"></x-github-markdown-render-service>
+  </d-application>
+
   <%= require('../partials/footer.html?raw') %>
 </body>
 </html>

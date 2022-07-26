@@ -28,9 +28,6 @@
     "html-webpack-plugin": "^5.5.0",
     "http-server": "^14.1.0",
     "mini-css-extract-plugin": "^2.6.0",
-    "postcss": "^8.4.14",
-    "postcss-loader": "^7.0.1",
-    "standard": "^16.0.4",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.1",
     "webpack": "^5.74.0",
@@ -38,7 +35,21 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
-    "postcss-csso": "^6.0.0",
-    "postcss-preset-env": "^7.7.2"
+    "@default-js/defaultjs-app-toolbox": "latest",
+    "@default-js/defaultjs-common-utils": "latest",
+    "@default-js/defaultjs-dynamic-requester": "latest",
+    "@default-js/defaultjs-expression-language": "latest",
+    "@default-js/defaultjs-extdom": "latest",
+    "@default-js/defaultjs-fetch-extentions": "latest",
+    "@default-js/defaultjs-html-components": "latest",
+    "@default-js/defaultjs-html-form": "latest",
+    "@default-js/defaultjs-html-jsondata": "latest",
+    "@default-js/defaultjs-html-modal": "latest",
+    "@default-js/defaultjs-html-pagination": "latest",
+    "@default-js/defaultjs-html-renderer": "latest",
+    "@default-js/defaultjs-html-request": "latest",
+    "@default-js/defaultjs-html-typeahead": "latest",
+    "@default-js/defaultjs-template-language": "latest",
+    "highlight.js": "^11.6.0"
   }
 }

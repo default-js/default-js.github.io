@@ -45,7 +45,6 @@ module.exports = {
             {
                 // https://webpack.js.org/loaders/css-loader/#root
                 test: /\.css$/i,
-                exclude: /node_modules/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader'

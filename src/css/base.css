@@ -1,4 +1,33 @@
+:root{
+    --body-background: #282727;
+    --body-color: #dfdfdf;
+    --body-border: #dfdfdf;
+
+    --table-background: #282727;
+    --table-even-background: #282727;
+    --table-odd-background: #414141;
+
+    --highlight-block-bg: #202122;
+    --highlight-inline-bg: #959da5;
+    --highlight-code-comment: #959da5;
+    --highlight-code-variable: #d49f2a;
+    --highlight-code-keyword: #042e57;
+    --highlight-code-function: #b392f0;
+    --highlight-code-syntax: #b392f0;
+}
+
+
 *, *::before, *::after {
     padding: 0;
     margin: 0;
+    font-size: clamp(16px, 1vw , 3vw);
+    line-height: 1.5rem;
+    color: var(--body-color);
 }
+
+body{
+    padding: 0 clamp(10px, 10vw, 5rem);
+    height: 100%;
+    background-color: var(--body-background);    
+}
+
