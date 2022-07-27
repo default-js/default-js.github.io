@@ -5,8 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const postcss = require('postcss');
-const postcssPresetEnv = require('postcss-preset-env');
 
 const buildPath = path.resolve(__dirname, 'docs');
 
