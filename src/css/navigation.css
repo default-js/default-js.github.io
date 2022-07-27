@@ -1,0 +1,21 @@
+.nav{
+    display: flex;
+    gap: 1rem;
+} 
+
+.nav-item {
+    padding: 0.3rem 0.5rem 0 0.5rem;
+    cursor: pointer;
+}
+
+.nav-item:hover{
+    color: var(--nav-hover-color);
+    border-bottom: solid 0.1rem var(--body-border);
+}
+
+.nav-horizontal{
+
+}
+.nav-vertical{
+    flex-direction: column;
+}

@@ -1,10 +1,16 @@
-<header id="page-header">
-    <div></div>
-    <nav>
-        <ul>
-            <li></li>
-
-        </ul>
-    </nav>
-
-</header>
+<d-renderer data="/data/structure.json" render-mode="self-replace">
+    <header id="page-header">
+        <div class="brand">
+            ${title}
+        </div>
+        <nav class="nav nav-horizontal" jstl-foreach="${groups}" jstl-foreach-var="group">
+            <div class="nav-item dropdown dropdown-on-hover right" jstl-if="${group.repos && group.repos.length != 0}">
+                ${group.title}
+                <nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+                    <d-route class="nav-item" name="${repos[repo].title}" template="/templates/repository.view.tpl.html"
+                        context="${JSON.stringify(repos[repo])}" stateful>${repos[repo].title}</d-route>
+                </nav>
+            </div>
+        </nav>
+    </header>
+</d-renderer>

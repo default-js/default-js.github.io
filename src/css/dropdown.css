@@ -1,0 +1,27 @@
+.dropdown{
+    position: relative;
+    isolation: isolate;
+} 
+.dropdown-content{
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem 1rem 0.5rem;    
+    border-radius: 0 0 0.2rem 0.2rem;
+    border: solid 0.1rem var(--body-border);  
+    background-color: var(--body-background); 
+    width: max-content; 
+}
+.dropdown.left .dropdown-content{
+    left: 0;
+}
+
+.dropdown.right .dropdown-content{
+    right: 0;
+}
+
+.dropdown.dropdown-on-hover:not(:hover) .dropdown-content {
+    display: none;
+}

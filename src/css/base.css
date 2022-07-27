@@ -7,6 +7,8 @@
     --table-even-background: #282727;
     --table-odd-background: #414141;
 
+    --nav-hover-color: #e7c0a5;
+
     --highlight-block-bg: #202122;
     --highlight-inline-bg: #959da5;
     --highlight-code-comment: #959da5;
@@ -29,5 +31,13 @@ body{
     padding: 0 clamp(10px, 10vw, 5rem);
     height: 100%;
     background-color: var(--body-background);    
+}
+
+d-renderer[render-mode="self-replace"]{
+    display: none;
+}
+
+d-route {
+    display: flex;
 }
 

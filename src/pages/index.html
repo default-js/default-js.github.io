@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>>default-js</title>
   <%= require('../partials/head.html?raw') %>
 </head>
+
 <body>
-
-  <!-- intercepted by a resourceQuery in the webpack config -->
-  <%= require('../partials/header.html?raw') %>
-
-  <h1 class="page-title">
-    <i class="fab fa-fort-awesome">default-js</i> Page
-  </h1>
-
   <d-application>
-    <nav>
-      <d-route name="defaultjs-extdom" template="https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md">defaultjs-extdom</d-route>
-      <d-route name="view-2" template="#view-2" stateful>view-2</d-route>
-      <d-route name="view-3" template="templates/view-3.tpl.html" stateful>view-3</d-route>
-    </nav>
+    <!-- intercepted by a resourceQuery in the webpack config -->
+    <%= require('../partials/header.html?raw') %>
     <d-view>
-
     </d-view>
-
-    <x-github-markdown-render-service src="https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md"></x-github-markdown-render-service>
+    <%= require('../partials/footer.html?raw') %>
   </d-application>
-
-  <%= require('../partials/footer.html?raw') %>
 </body>
+
 </html>

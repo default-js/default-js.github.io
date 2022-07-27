@@ -1,0 +1,51 @@
+{
+    "id": "default-js",
+    "title" : "@Default-js",
+    "npm-prefix": "@default-js",
+    "base": "https://github.com/default-js",
+    "base-raw": "https://raw.githubusercontent.com/default-js",
+    "default-readme": "README.md",
+    "groups" : [
+        {
+            "title": "Core API's",
+            "repos":["defaultjs-html-components", "defaultjs-template-language"]
+        },
+        {
+            "title": "form",
+            "repos":[]
+        },
+        {
+            "title": "web components",
+            "repos":[]
+        },
+        {
+            "title": "extentions",
+            "repos":["defaultjs-extdom"]
+        }
+    ],
+    "repos": {
+        "defaultjs-extdom": {
+            "id": "defaultjs-extdom",
+            "title": "extdom",
+            "main-branch": "master",
+            "tags": ["extentions", "dom"],
+            "readme" : "https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md"
+        },
+        "defaultjs-html-components": {
+            "id": "defaultjs-html-components",
+            "title": "defaultjs-html-components",
+            "main-branch": "master",
+            "tags": ["framework", "web component", "html"]            ,
+            "readme" : "https://raw.githubusercontent.com/default-js/defaultjs-html-components/master/README.md"
+        },
+        "defaultjs-template-language": {
+            "id": "defaultjs-template-language",
+            "title": "defaultjs-template-language",
+            "main-branch": "master",            
+            "tags": ["framework", "web component", "html"],
+            "readme" : "https://raw.githubusercontent.com/default-js/defaultjs-template-language/master/README.md"
+        }
+
+
+    }
+}
