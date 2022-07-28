@@ -33,6 +33,11 @@ body{
     background-color: var(--body-background);    
 }
 
+x-github-markdown-render-service{
+    display: flex;
+    flex-direction: column;
+}
+
 d-renderer[render-mode="self-replace"]{
     display: none;
 }
