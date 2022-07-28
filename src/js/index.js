@@ -1,4 +1,3 @@
-import "../css/normalize.css";
 import "../css/base.css";
 import "../css/navigation.css";
 import "../css/highlight.css";

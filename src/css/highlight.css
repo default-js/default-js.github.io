@@ -1,6 +1,5 @@
 x-github-markdown-render-service {
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
 x-github-markdown-render-service div,
@@ -8,6 +7,24 @@ x-github-markdown-render-service p,
 x-github-markdown-render-service table {
     margin: 1rem 0;
 }
+
+x-github-markdown-render-service > ul:first-of-type::before{
+    display: block;
+    font-size: 1.2rem;
+    content: "Table of  Content";
+    border-bottom: solid 0.1rem var(--body-border);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+x-github-markdown-render-service > ul:first-of-type {
+    font-family: monospace;
+    font-size: 90%;
+}
+x-github-markdown-render-service > ul:first-of-type li {
+    line-height: 150%;
+}
+
 
 x-github-markdown-render-service table {
     background-color: var(--table-background);
@@ -35,18 +52,21 @@ x-github-markdown-render-service tbody tr:nth-child(even) {
 }
 
 
-
-
-
 x-github-markdown-render-service .highlight {
     border-radius: 0.3rem;
     padding: 2rem;
     background-color: var(--highlight-block-bg);
 }
+x-github-markdown-render-service .highlight *{    
+    background-color: inherit;
+    font-size: 1rem;
+}
 
 x-github-markdown-render-service code {
     border-radius: 0.3rem;
-    padding: 0.2rem 0.3rem;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 300;
     background-color: var(--highlight-inline-bg);
 
 }

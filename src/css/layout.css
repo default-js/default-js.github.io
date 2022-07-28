@@ -1,4 +1,29 @@
-#page-header{
+d-application {
     display: flex;
+    flex-direction: column;   
+    max-width: 100vw;
+    height: 100vh;
+}
+
+#page-header {
+    display: flex;
+    padding: 0.5rem 0;
     gap: 10rem;
+    border-bottom: solid 0.3rem var(--body-border);
+    background-color: var(--body-background); 
+}
+#page-header > * {
+    margin-top: auto;
+}
+
+#page-header>nav {   
+    margin-left: auto;
+
+}
+
+#page-main {
+    padding: 2rem 0;
+}
+
+#page-footer{
 }
