@@ -7,20 +7,21 @@
 </head>
 
 <body>
-	<template id="#home-template">
-
+	<template id="home-template">
+		<h1>@Default-js</h1>
 	</template>
 	<d-application>
 		<d-renderer data="/data/structure.json" render-mode="self-replace">
 			<header id="page-header">
-				<d-route id="home" name="home" template="#home-template" stateful>
-					<h1>${title}</h1>
+				<d-route name="home" template="#home-template">
+					<h3>${title}</h3>
 				</d-route>
 				<nav class="nav nav-horizontal" jstl-foreach="${groups}" jstl-foreach-var="group"
 					jstl-status-var="status">
 
-					<div class="nav-item dropdown dropdown-on-hover right"
-						jstl-if="${group.repos && group.repos.length != 0}">
+					<div class="nav-item dropdown dropdown-on-event right"
+						jstl-if="${group.repos && group.repos.length != 0}"
+						@click:toggleclass:active>
 						${group.title}
 						<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}"
 							jstl-foreach-var="repo">
