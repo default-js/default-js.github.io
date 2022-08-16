@@ -7,9 +7,13 @@
     padding: 0.3rem 0.5rem 0 0.5rem;
     cursor: pointer;
 }
-
 .nav-item{
+    border-bottom: solid 0.1rem transparent;
+}
+
+.nav-item:hover{
     color: var(--nav-hover-color);
+    border-bottom-color: var(--body-border);
 }
 
 .nav-horizontal{

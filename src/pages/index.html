@@ -23,7 +23,7 @@
 						${group.title}
 						<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}"
 							jstl-foreach-var="repo">
-							<d-route class="nav-item dropdown-content-item" name="${repo}" template="/templates/repository.view.tpl.html"
+							<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html"
 								context="{'repo':'${repo}'}" stateful>${repo}</d-route>
 						</nav>
 					</x-dropdown>

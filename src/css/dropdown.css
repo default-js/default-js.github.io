@@ -26,7 +26,3 @@
 .dropdown:not([active]) .dropdown-content {
     display: none;
 }
-
-.dropdown-content-item:hover{
-    border-bottom: solid 0.1rem var(--body-border);
-}
