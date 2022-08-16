@@ -26,3 +26,15 @@ d-application {
 
 #page-footer{
 }
+
+@media (min-width: 1024px) {
+    .for-small-device{
+        display: none;
+    }
+}
+
+@media (max-width: 1023px) {
+    .for-big-device {
+        display: none;
+    }
+}

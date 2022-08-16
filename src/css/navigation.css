@@ -19,7 +19,7 @@
     margin-bottom: 1rem;
 }
 
-.nav-item:hover{
+.nav-item:not(.nav-item-text-only):hover{
     color: var(--nav-hover-color);
     border-bottom-color: var(--body-border);
 }
