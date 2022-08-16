@@ -1,3 +1,4 @@
+import "../css/fontawesome.css";
 import "../css/base.css";
 import "../css/navigation.css";
 import "../css/highlight.css";

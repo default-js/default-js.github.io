@@ -16,9 +16,8 @@ d-application {
     margin-top: auto;
 }
 
-#page-header>nav {   
-    margin-left: auto;
-
+#header-home {
+    margin-right: auto;
 }
 
 #page-main {

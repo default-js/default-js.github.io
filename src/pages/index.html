@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>>default-js</title>
+		<%= require('../partials/head.html?raw') %>
+	</head>
 
-<head>
-	<title>>default-js</title>
-	<%= require('../partials/head.html?raw') %>
-</head>
-
-<body>
-	<template id="home-template">
-		<h1>@Default-js</h1>
-	</template>
-	<d-application>
-		<d-renderer data="/data/structure.json" render-mode="self-replace">
-			<header id="page-header">
-				<d-route name="home" template="#home-template">
-					<h3>${title}</h3>
-				</d-route>
-				<nav class="nav nav-horizontal" jstl-foreach="${groups}" jstl-foreach-var="group"
-					jstl-status-var="status">
-					<x-dropdown class="nav-item dropdown right"
-						jstl-if="${group.repos && group.repos.length != 0}">
-						${group.title}
-						<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}"
-							jstl-foreach-var="repo">
-							<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html"
-								context="{'repo':'${repo}'}" stateful>${repo}</d-route>
-						</nav>
+	<body>
+		<template id="home-template">
+			<h1>@Default-js</h1>
+		</template>
+		<d-application>
+			<d-renderer data="/data/structure.json" render-mode="self-replace">
+				<header id="page-header">
+					<d-route id="header-home" name="home" template="#home-template">
+						<h3>${title}</h3>
+					</d-route>
+					<nav class="nav nav-horizontal" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status" jstl-if="${window.matchMedia('(min-width: 1024px)').matches}">
+						<x-dropdown class="nav-item dropdown right" jstl-if="${group.repos && group.repos.length != 0}">
+							${group.title}
+							<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+								<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
+							</nav>
+						</x-dropdown>
+					</nav>
+					<x-dropdown class="dropdown right" jstl-if="${window.matchMedia('(max-width: 1023px)').matches}">
+						<i class="fa-solid fa-bars"></i>
+						<div class="dropdown-content" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
+							<div class="nav-item " jstl-if="${group.repos && group.repos.length != 0}">								
+								<strong>${group.title}</strong>								
+								<nav class="nav nav-vertical" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+									<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
+								</nav>
+							</div>
+						</div>
 					</x-dropdown>
-				</nav>
-			</header>
-		</d-renderer>
-		<main id="page-main">
-			<d-view></d-view>
-		</main>
-		<footer id="page-footer">
-			<%= require('../partials/footer.html?raw') %>
-		</footer>
-	</d-application>
-</body>
-
+				</header>
+			</d-renderer>
+			<main id="page-main">
+				<d-view></d-view>
+			</main>
+			<footer id="page-footer"><%= require('../partials/footer.html?raw') %></footer>
+		</d-application>
+	</body>
 </html>

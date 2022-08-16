@@ -85,6 +85,7 @@ module.exports = (env, argv) => {
 					patterns: [
 						{ from: "./src/data", to: "data" },
 						{ from: "./src/templates", to: "templates" },
+						{ from: "./src/webfonts", to: "webfonts" },
 					],
 				})
 			);
