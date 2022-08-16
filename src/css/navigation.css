@@ -8,9 +8,8 @@
     cursor: pointer;
 }
 
-.nav-item:hover{
+.nav-item{
     color: var(--nav-hover-color);
-    border-bottom: solid 0.1rem var(--body-border);
 }
 
 .nav-horizontal{

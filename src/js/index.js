@@ -6,6 +6,7 @@ import "../css/layout.css";
 
 import "@default-js/defaultjs-extdom";
 import "@default-js/defaultjs-app-toolbox";
-import "./components/github-markdown-render-service";
+import "./components/GithubMarkdownRenderServiceElement";
+import "./components/DropdownElement";
 import "@default-js/defaultjs-html-renderer";
 

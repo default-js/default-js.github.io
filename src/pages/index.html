@@ -18,17 +18,15 @@
 				</d-route>
 				<nav class="nav nav-horizontal" jstl-foreach="${groups}" jstl-foreach-var="group"
 					jstl-status-var="status">
-
-					<div class="nav-item dropdown dropdown-on-event right"
-						jstl-if="${group.repos && group.repos.length != 0}"
-						@click:toggleclass:active>
+					<x-dropdown class="nav-item dropdown right"
+						jstl-if="${group.repos && group.repos.length != 0}">
 						${group.title}
 						<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}"
 							jstl-foreach-var="repo">
-							<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html"
+							<d-route class="nav-item dropdown-content-item" name="${repo}" template="/templates/repository.view.tpl.html"
 								context="{'repo':'${repo}'}" stateful>${repo}</d-route>
 						</nav>
-					</div>
+					</x-dropdown>
 				</nav>
 			</header>
 		</d-renderer>
