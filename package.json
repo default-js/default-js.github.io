@@ -4,7 +4,7 @@
   "description": "You can use the [editor on GitHub](https://github.com/default-js/default-js.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --mode=development",
+    "dev": "webpack serve --mode=development --open",
     "build": "webpack --mode=production"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "@default-js/defaultjs-extdom": "latest",
     "@default-js/defaultjs-fetch-extentions": "latest",
     "@default-js/defaultjs-html-components": "latest",
+    "@default-js/defaultjs-html-dropdown": "^1.0.0",
     "@default-js/defaultjs-html-form": "latest",
     "@default-js/defaultjs-html-jsondata": "latest",
     "@default-js/defaultjs-html-modal": "latest",

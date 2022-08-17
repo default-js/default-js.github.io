@@ -1,11 +1,4 @@
-.dropdown{
-    display: block;
-    position: relative;
-    isolation: isolate;
-} 
-.dropdown-content{
-    position: absolute;
-    z-index: 1000;
+d-dropdown-content{
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -14,15 +7,4 @@
     border: solid 0.1rem var(--body-border);  
     background-color: var(--body-background); 
     width: max-content; 
-}
-.dropdown.left .dropdown-content{
-    left: 0;
-}
-
-.dropdown.right .dropdown-content{
-    right: 0;
-}
-
-.dropdown:not([active]) .dropdown-content {
-    display: none;
 }

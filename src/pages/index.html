@@ -16,24 +16,26 @@
 						<h3>${title}</h3>
 					</d-route>
 					<nav class="nav nav-horizontal for-big-device" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
-						<x-dropdown class="nav-item dropdown right" jstl-if="${group.repos && group.repos.length != 0}">
+						<d-dropdown class="nav-item dropdown right" jstl-if="${group.repos && group.repos.length != 0}">
 							${group.title}
-							<nav class="nav nav-vertical dropdown-content" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
-								<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
-							</nav>
-						</x-dropdown>
+							<d-dropdown-content>
+								<nav class="nav nav-vertical" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+									<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
+								</nav>
+							</d-dropdown-content>
+						</d-dropdown>
 					</nav>
-					<x-dropdown class="nav nav-vertical dropdown right for-small-device">
+					<d-dropdown class="nav nav-vertical dropdown right for-small-device">
 						<i class="fa-solid fa-bars"></i>
-						<div class="dropdown-content" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
+						<d-dropdown-content jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
 							<div class="nav-item nav-item-text-only" jstl-if="${group.repos && group.repos.length != 0}">								
 								<strong>${group.title}</strong>								
 								<nav class="nav nav-vertical" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
 									<d-route class="nav-item" name="${repo}" template="/templates/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
 								</nav>
 							</div>
-						</div>
-					</x-dropdown>
+						</d-dropdown-content>
+					</d-dropdown>
 				</header>
 			</d-renderer>
 			<main id="page-main">
