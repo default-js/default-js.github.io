@@ -8,7 +8,7 @@
 	"groups": [
 		{
 			"title": "Core API's",
-			"repos": ["defaultjs-html-components", "defaultjs-template-language", "defaultjs-expression-language"]
+			"repos": ["defaultjs-html-components", "defaultjs-template-language", "defaultjs-expression-language", "defaultjs-app-toolbox"]
 		},
 		{
 			"title": "Form",
