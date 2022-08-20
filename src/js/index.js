@@ -1,8 +1,8 @@
 /*
  * styles from libs
  */
-
-import "@default-js/defaultjs-html-dropdown/src/css/dropdown.css";
+import "@default-js/defaultjs-app-toolbox/dist/css/app-toolbox.css";
+import "@default-js/defaultjs-html-dropdown/dist/css/dropdown.css";
 /*
  * custom styles 
  */
