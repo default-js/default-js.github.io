@@ -8,7 +8,7 @@
 	"groups": [
 		{
 			"title": "Core API's",
-			"repos": ["defaultjs-html-components", "defaultjs-template-language", "defaultjs-expression-language"]
+			"repos": ["defaultjs-html-components", "defaultjs-template-language", "defaultjs-expression-language", "defaultjs-app-toolbox"]
 		},
 		{
 			"title": "Form",
@@ -16,7 +16,7 @@
 		},
 		{
 			"title": "Web Components",
-			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal","defaultjs-html-jsondata","defaultjs-html-request", "defaultjs-html-notification"]
+			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal","defaultjs-html-jsondata","defaultjs-html-request", "defaultjs-html-notification", "defaultjs-html-dropdown"]
 		},
 		{
 			"title": "Browser API Extentions",
@@ -25,6 +25,15 @@
         {
 			"title": "Utilities",
 			"repos": ["defaultjs-dynamic-requester", "defaultjs-logging", "defaultjs-common-utils"]
+		},
+		{
+			"title": "Examples",
+			"pages": [
+				{
+					"title": "Dogspage",
+					"url": "/examples/dogspage"
+				}
+			]
 		}
 	]
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>>default-js</title>
+		<%= require('../global/head.html?raw') %>
+	</head>
+
+	<body>
+		<template id="home-template">
+			<h1>@Default-js</h1>
+		</template>
+		<d-application route="home">
+			<d-renderer data="/data/docu-app/structure.json" render-mode="self-replace" condition>
+				<header id="page-header">
+					<d-route id="header-home" name="home" template="#home-template">
+						<h3>${title}</h3>
+					</d-route>
+					<nav class="nav nav-horizontal for-big-device" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
+						<d-dropdown class="nav-item dropdown right" jstl-if="${(group.repos && group.repos.length != 0) || (group.pages && group.pages.length != 0)}">
+							${group.title}
+							<d-dropdown-content>
+								<nav class="nav nav-vertical">
+									<jstl jstl-if="${group.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+										<d-route class="nav-item" name="${repo}" template="/templates/docu-app/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
+									</jstl>
+									<jstl jstl-if="${group.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
+										<a class="nav-item" href="${page.url}" target="_blank">${page.title}</a>
+									</jstl>
+								</nav>
+							</d-dropdown-content>
+						</d-dropdown>
+					</nav>
+					<d-dropdown class="nav nav-vertical dropdown right for-small-device">
+						<i class="fa-solid fa-bars"></i>
+						<d-dropdown-content jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">							
+								<details jstl-if="${(group.repos && group.repos.length != 0) || (group.pages && group.pages.length != 0)}" is="app-details">
+									<summary>${group.title}</summary>
+								
+									<nav class="nav nav-vertical">
+										<jstl jstl-if="${group.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+											<d-route class="nav-item" name="${repo}" template="/templates/docu-app/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
+										</jstl>
+										<jstl jstl-if="${group.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
+											<a class="nav-item" href="${page.url}" target="_blank">${page.title}</a>
+										</jstl>
+									</nav>
+									
+								</details>
+							</div>
+						</d-dropdown-content>
+					</d-dropdown>
+				</header>
+			</d-renderer>
+			<main id="page-main">
+				<d-view></d-view>
+			</main>
+			<footer id="page-footer"></footer>
+		</d-application>
+	</body>
+</html>

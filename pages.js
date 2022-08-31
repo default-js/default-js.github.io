@@ -1,3 +1,9 @@
 module.exports = [
-    { "name": "index" }
+    { 
+        "name": "docu-app"
+    },
+    { 
+        "name": "example-dogspage",
+        "path" : "examples/dogspage"
+    }
 ];

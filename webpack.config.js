@@ -12,17 +12,19 @@ const buildPath = path.resolve(__dirname, "docs");
 const pages = require("./pages");
 
 module.exports = (env, argv) => {
+	const prod = argv.mode == "production";
+
 	return {
 		// This option controls if and how source maps are generated.
 		// https://webpack.js.org/configuration/devtool/
-		devtool: argv.mode == "production" ? "source-map" : "inline-source-map",
+		devtool: prod ? "source-map" : "inline-source-map",
 
 		// https://webpack.js.org/concepts/entry-points/#multi-page-application
 		entry: (() => {
 			const entries = {};
 			for (let page of pages) {
-				const { name } = page;
-				entries[name] = `./src/js/${name}.js`;
+				const { name, path } = page;
+				entries[name] = `./src/pages/${path ? path : name}/index.js`;
 			}
 			return entries;
 		})(),
@@ -30,7 +32,7 @@ module.exports = (env, argv) => {
 		// how to write the compiled files to disk
 		// https://webpack.js.org/concepts/output/
 		output: {
-			filename: argv.mode == "production" ? `js/[name].[contenthash].min.js` : `js/[name].js`,
+			filename: prod ? `js/[name].[contenthash].min.js` : `js/[name].js`,
 			path: `${buildPath}`,
 			clean: true,
 		},
@@ -68,52 +70,54 @@ module.exports = (env, argv) => {
 					filename: `css/[name].css`,
 				}),
 			];
-			for (let page of pages) {
-				const { name } = page;
+			for (let { name, path } of pages) {
 				plugins.push(
 					new HtmlWebpackPlugin({
-						template: `./src/pages/${name}.html`,
+						template: `./src/pages/${path ? path : name}/index.html`,
 						inject: true,
 						chunks: [name],
-						filename: `${name}.html`,
-					})
+						filename: path ? `${path}/index.html` : `index.html`,
+					}),
 				);
 			}
 
 			plugins.push(
 				new CopyPlugin({
-					patterns: [
-						{ from: "./src/data", to: "data" },
-						{ from: "./src/templates", to: "templates" },
-						{ from: "./src/webfonts", to: "webfonts" },
-					],
-				})
+					patterns: (() => {
+						const noErrorOnMissing = true;
+						const pattern = [
+							{ from: "./src/data", to: "data", noErrorOnMissing },
+							{ from: "./src/templates", to: "templates", noErrorOnMissing },
+							{ from: "./src/webfonts", to: "webfonts", noErrorOnMissing },
+						];
+						for (let { name, path } of pages) {
+							pattern.push({ from: `./src/pages/${path ? path : name}/templates`, to: `templates/${path ? path : name}`, noErrorOnMissing });							
+							pattern.push({ from: `./src/pages/${path ? path : name}/data`, to: `data/${path ? path : name}`, noErrorOnMissing });
+							pattern.push({ from: `./src/pages/${path ? path : name}/assets`, to: `assets/${path ? path : name}`, noErrorOnMissing });
+						}
+
+						return pattern;
+					})(),
+				}),
 			);
 
-			if (argv.mode == "production")
+			if (prod)
 				plugins.push(
 					new FileManagerPlugin({
 						events: {
 							onStart: {
 								delete: ["./docs"],
 							},
-							/*
-                    onEnd: {
-                        copy: [
-                            { source: "./src/data/**", destination: "./docs/data" },
-                            { source: "./src/template/**", destination: "./docs/template" },
-                        ]
-                    }*/
 						},
 						runTasksInSeries: true,
 						runOnceInWatchMode: true,
-					})
+					}),
 				);
 			return plugins;
 		})(),
 		// https://webpack.js.org/configuration/optimization/
 		optimization: {
-			minimize: argv.mode == "production",
+			minimize: prod,
 			minimizer: [
 				// https://webpack.js.org/plugins/terser-webpack-plugin/
 				new TerserPlugin({
