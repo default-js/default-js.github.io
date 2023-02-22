@@ -28,7 +28,15 @@ class GithubMarkdownRenderService extends Component {
                 body : JSON.stringify({ text: markdown })
             });
             markdown = await markdown.text();
-            this.root.html(markdown);
+            const content = create(markdown);
+            const anchors = content.find(`a[id^="user-content" i]`);
+            for(const anchor of anchors){
+                const href = anchor.attr("href").replace("#", "");
+                if(href)
+                anchor.attr("id", href);
+            }
+            
+            this.root.append(content);
 
             this.#rendered = true;
         }
