@@ -16,7 +16,7 @@
 		},
 		{
 			"title": "Web Components",
-			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal","defaultjs-html-jsondata","defaultjs-html-request", "defaultjs-html-notification", "defaultjs-html-dropdown"]
+			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal","defaultjs-html-jsondata","defaultjs-html-request", "defaultjs-html-notification", "defaultjs-html-dropdown","defaultjs-html-button"]
 		},
 		{
 			"title": "Browser API Extentions",
