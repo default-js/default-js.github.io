@@ -74,7 +74,7 @@ module.exports = (env, argv) => {
 				plugins.push(
 					new HtmlWebpackPlugin({
 						template: `./src/pages/${path ? path : name}/index.html`,
-						inject: true,
+						inject: "body",
 						chunks: [name],
 						filename: path ? `${path}/index.html` : `index.html`,
 					}),

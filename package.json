@@ -53,6 +53,7 @@
     "@default-js/defaultjs-html-request": "latest",
     "@default-js/defaultjs-html-typeahead": "latest",
     "@default-js/defaultjs-template-language": "latest",
-    "highlight.js": "^11.6.0"
+    "highlight.js": "^11.6.0",
+    "markdown-it": "^13.0.1"
   }
 }

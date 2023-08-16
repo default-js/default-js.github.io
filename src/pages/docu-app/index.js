@@ -26,4 +26,5 @@ import "@default-js/defaultjs-html-dropdown";
  */
 
 import "../../js/components/GithubMarkdownRenderServiceElement";
+//import "../../js/components/MarkdownRendererElement";
 import "./js/ExtendedHTMLDetailsElement";

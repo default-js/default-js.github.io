@@ -16,15 +16,24 @@
 		},
 		{
 			"title": "Web Components",
-			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal","defaultjs-html-jsondata","defaultjs-html-request", "defaultjs-html-notification", "defaultjs-html-dropdown"]
+			"repos": ["defaultjs-html-renderer", "defaultjs-html-pagination", "defaultjs-html-typeahead", "defaultjs-html-modal", "defaultjs-html-jsondata", "defaultjs-html-request", "defaultjs-html-notification", "defaultjs-html-dropdown", "defaultjs-html-button"]
 		},
 		{
 			"title": "Browser API Extentions",
 			"repos": ["defaultjs-extdom", "defaultjs-fetch-extentions", "defaultjs-httpinterceptor"]
 		},
-        {
+		{
 			"title": "Utilities",
 			"repos": ["defaultjs-dynamic-requester", "defaultjs-logging", "defaultjs-common-utils"]
+		},
+		{
+			"title": "Examples",
+			"pages": [
+				{
+					"title": "Dogspage",
+					"url": "/examples/dogspage"
+				}
+			]
 		}
 	]
 }
