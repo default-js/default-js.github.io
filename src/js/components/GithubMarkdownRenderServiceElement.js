@@ -29,7 +29,7 @@ class GithubMarkdownRenderService extends Component {
             });
             markdown = await markdown.text();
             const content = create(markdown);
-            const anchors = content.find(`a[id^="user-content" i]`);
+            const anchors = content.find(`a[id^="user-content" i]`) || [];
             for(const anchor of anchors){
                 const href = anchor.attr("href").replace("#", "");
                 if(href)
