@@ -1,0 +1,97 @@
+<h1>defaultjs-html-button</h1>
+<ul>
+<li><a href="#defaultjs-html-button">defaultjs-html-button</a>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#how-to-include">How to include</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+<li><a href="#overview-of-all-attributes">Overview of all Attributes</a></li>
+</ul>
+</li>
+</ul>
+<h2>Intro</h2>
+<p>This a web component can transform your buttons and links into an interactive element, with less or even no programming effort.</p>
+<h2>How to include</h2>
+<p><strong>NPM</strong></p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//import html renderer element</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">HTMLDefaultjsAnchorElement</span>, <span class="hljs-title class_">HTMLDefaultjsButtonElement</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-html-button&quot;</span>
+</code></pre>
+<p><strong>Script Tag</strong></p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span> ...<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+            <span class="hljs-selector-id">#target</span><span class="hljs-selector-pseudo">:not</span>(<span class="hljs-selector-class">.show</span>) { <span class="hljs-attribute">display</span>: none;}
+        </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>        
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-button&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;toggle-class&quot;</span> <span class="hljs-attr">class-value</span>=<span class="hljs-string">&quot;show&quot;</span> <span class="hljs-attr">selector</span>=<span class="hljs-string">&quot;#target&quot;</span>&gt;</span>toggle class &quot;show&quot; by link<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-button&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;toggle-class&quot;</span> <span class="hljs-attr">class-value</span>=<span class="hljs-string">&quot;show&quot;</span> <span class="hljs-attr">selector</span>=<span class="hljs-string">&quot;#target&quot;</span>&gt;</span>toggle class &quot;show&quot; by button<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;target&quot;</span>&gt;</span>visible<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        //script file is located at dist directory
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;module&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;browser-defaultjs-html-button.min.js&quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml">   
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</span></span></code></pre>
+<h2>How to use</h2>
+<p>Define a <code>button</code> or <code>a</code> tag and use the <code>is</code> attribute with the value <code>d-button</code>. You must define the <code>type</code> attribute and choose between <code>delegate</code>, <code>toggle-class</code>, <code>toggle-attribute</code>, <code>call-renderer</code>, <code>render</code> to specify what kind of action would be executed.</p>
+<pre><code class="hljs language-html">    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-button&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;[delegate | toggle-class | toggle-attribute | call-renderer | render]&quot;</span>&gt;</span>link<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-button&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;[delegate | toggle-class | toggle-attribute | call-renderer | render]&quot;</span>&gt;</span>button<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre>
+<p>For the correct execution it is necessary to define additional attributes depending on the type.</p>
+<h2>Overview of all Attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>required at type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td></td>
+<td><code>delegate</code>, <code>toggle-class</code>, <code>toggle-attribute</code>, <code>call-renderer</code>, <code>render</code></td>
+</tr>
+<tr>
+<td><code>event-name</code></td>
+<td><code>delegate</code></td>
+<td>define the event to be trigger</td>
+</tr>
+<tr>
+<td><code>class-name</code></td>
+<td><code>toggle-class</code></td>
+<td>define the class to be toggle</td>
+</tr>
+<tr>
+<td><code>attribute-name</code></td>
+<td><code>toggle-attribute</code></td>
+<td>define the attribute to be toggle</td>
+</tr>
+<tr>
+<td><code>detail</code></td>
+<td><code>delegate</code></td>
+<td>detail value for an delegated event</td>
+</tr>
+<tr>
+<td><code>template</code></td>
+<td><code>render</code></td>
+<td>define the template to be render. Further information at <a href="https://github.com/default-js/defaultjs-template-language#readme">defaultjs-template-language</a></td>
+</tr>
+<tr>
+<td><code>render-mode</code></td>
+<td><code>render</code></td>
+<td><code>replace</code>, <code>append</code>, <code>prepend</code>. Default: <code>replace</code> (for further information read <a href="https://github.com/default-js/defaultjs-template-language#readme">defaultjs-template-language</a>)</td>
+</tr>
+<tr>
+<td><code>selector</code></td>
+<td></td>
+<td>define a selector to specify elements on which the action is to be performed. Default: the <code>button</code> or <code>a</code> it self. Can be defined on any type.</td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td></td>
+<td>define json object, which be used to evaluate the value of the most attributes. The most attributes can be dynamic. Can be defined on any type. Further information at <a href="https://github.com/default-js/defaultjs-expression-language#readme">defaultjs-expression-language</a></td>
+</tr>
+</tbody>
+</table>

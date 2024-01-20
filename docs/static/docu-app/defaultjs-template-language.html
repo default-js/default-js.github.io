@@ -1,0 +1,743 @@
+<h1>defaultjs-template-language (<code>alias: jstl</code>)</h1>
+<ul>
+<li><a href="#defaultjs-template-language-alias-jstl">defaultjs-template-language (<code>alias: jstl</code>)</a></li>
+<li><a href="#basic-usage">Basic usage</a></li>
+<li><a href="#use-template-file">Use Template File</a></li>
+<li><a href="#template-functionality">Template functionality</a>
+<ul>
+<li><a href="#expressions">Expressions</a></li>
+<li><a href="#text-content-manipulation">Text content manipulation</a></li>
+<li><a href="#jstl-if">jstl-if</a></li>
+<li><a href="#jstl-choose">jstl-choose</a></li>
+<li><a href="#jstl-foreach">jstl-foreach</a></li>
+<li><a href="#jstl-repeat">jstl-repeat</a></li>
+<li><a href="#jstl-data">jstl-data</a>
+<ul>
+<li><a href="#jstl-data-moderemote"><code>jstl-data-mode=&quot;remote&quot;</code></a></li>
+<li><a href="#jstl-data-modeset"><code>jstl-data-mode=&quot;set&quot;</code></a></li>
+<li><a href="#jstl-data-modedirect"><code>jstl-data-mode=&quot;direct&quot;</code></a></li>
+</ul>
+</li>
+<li><a href="#jstl-include">jstl-include</a>
+<ul>
+<li><a href="#additional-option">Additional option</a></li>
+</ul>
+</li>
+<li><a href="#jstl-attach-element">jstl-attach-element</a>
+<ul>
+<li><a href="#additional-option-1">Additional option</a></li>
+</ul>
+</li>
+<li><a href="#attribute-manipulation">Attribute manipulation</a></li>
+<li><a href="#event-handler">Event handler</a>
+<ul>
+<li><a href="#add-event-handler">add event handler</a></li>
+<li><a href="#delegate-events">delegate events</a></li>
+<li><a href="#toggle-attribute-by-event">toggle attribute by event</a></li>
+<li><a href="#toggle-class-by-event">toggle class by event</a></li>
+</ul>
+</li>
+<li><a href="#jstl-async">jstl-async</a></li>
+<li><a href="#jstl-tagname">jstl-tagname</a></li>
+<li><a href="#jstl-ignore">jstl-ignore</a></li>
+<li><a href="#jstl-on-finished">jstl-on-finished</a></li>
+</ul>
+</li>
+<li><a href="#special-tags">Special Tags</a>
+<ul>
+<li><a href="#tag-jstl">Tag <code>jstl</code></a></li>
+</ul>
+</li>
+<li><a href="#javascript-api">Javascript API</a>
+<ul>
+<li><a href="#template">Template</a>
+<ul>
+<li><a href="#new-tempatetemplate"><code>new Tempate(template)</code></a></li>
+<li><a href="#loadtemplate-cache-alias--template"><code>load(template, cache, alias)</code> ⇒ <code>Template</code></a></li>
+<li><a href="#fetchurl-cache-alias--template"><code>fetch(url, cache, alias)</code> ⇒ <code>Template</code></a></li>
+<li><a href="#loadnodetemplatenode-defaulttemplate-cache-alias--template"><code>loadNodeTemplate(node, defaultTemplate, cache, alias)</code> ⇒ <code>Template</code></a></li>
+</ul>
+</li>
+<li><a href="#renderer">Renderer</a>
+<ul>
+<li><a href="#new-renderertemplate-data"><code>new Renderer(template, data)</code></a></li>
+<li><a href="#renderoption"><code>render(option)</code></a></li>
+</ul>
+</li>
+<li><a href="#custom-directives">Custom Directives</a></li>
+<li><a href="#custom-tags">Custom Tags</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>The defaultjs-template-language, or simplified <code>J</code>ava<code>S</code>cript <code>T</code>emplate <code>L</code>anguage -&gt; short <code>jstl</code>,  is a reimplementation of <a href="https://github.com/TwilightTitus/de.titus.jstl">de.titus.jstl</a>. The new version no longer uses jquery. Only dependencies from the <code>@default-js</code> ecosystem are used. there are no third party libs used at runtime.</p>
+<p>The reimplementation has two goals:</p>
+<ol>
+<li><strong>Primary goal</strong> is to support javascript <code>await async</code> at all directives and all api levels.</li>
+<li><strong>Secondary goal</strong> is to improve the performence.</li>
+</ol>
+<p><em>Both goals has been fully achieved.</em></p>
+<h1>Basic usage</h1>
+<p><strong>NPM</strong></p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//import the Template and Renderer Classes</span>
+<span class="hljs-keyword">import</span> {<span class="hljs-title class_">Template</span>, <span class="hljs-title class_">Renderer</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-template-languange&quot;</span>
+
+<span class="hljs-comment">//find the container at html page, to render the content into</span>
+<span class="hljs-keyword">const</span> container = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyContainterToRenderInto&quot;</span>);
+<span class="hljs-comment">//load the template to be render</span>
+<span class="hljs-keyword">const</span> template = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Template</span>.<span class="hljs-title function_">load</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">&quot;/path/to/a/template.tpl.html&quot;</span>, location));
+<span class="hljs-comment">//render the template into container with some data</span>
+<span class="hljs-title class_">Renderer</span>.<span class="hljs-title function_">render</span>({container, template, <span class="hljs-attr">data</span>: {}});
+</code></pre>
+<p><strong>Script Tag</strong></p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span> ...<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;MyContainterToRenderInto&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        //script file is located at dist directory
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/defaultjs-template-languange.min.js&quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml">
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span>&gt;</span><span class="language-javascript">
+        <span class="hljs-keyword">const</span> {<span class="hljs-title class_">Template</span>, <span class="hljs-title class_">Renderer</span>} = defaultjs.<span class="hljs-property">tl</span>;
+        <span class="hljs-keyword">const</span> container = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyContainterToRenderInto&quot;</span>);
+
+        <span class="hljs-keyword">const</span> render = <span class="hljs-keyword">async</span> () {
+            <span class="hljs-comment">//load the template to be render</span>
+            <span class="hljs-keyword">const</span> template = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Template</span>.<span class="hljs-title function_">load</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">&quot;/path/to/a/template.tpl.html&quot;</span>, location));
+            <span class="hljs-comment">//render the template into container with some data</span>
+            <span class="hljs-title class_">Renderer</span>.<span class="hljs-title function_">render</span>({container, template, <span class="hljs-attr">data</span>: {}});
+        };
+
+        <span class="hljs-title function_">render</span>();
+        </span></span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h1>Use Template File</h1>
+<h1>Template functionality</h1>
+<h2>Expressions</h2>
+<p>The expression provide the capability make your content dynamic. The expression use properties from the data context and combine the property values with javascript. It is possible to execute all javascript, but you have not the complete access at all global properties. The execution engine for the expression support javascript <code>await async</code>.</p>
+<p><strong>Basic syntax</strong></p>
+<pre><code class="hljs language-javascript">${varname|javascript}
+</code></pre>
+<p><strong>Examples</strong></p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">/*
+const data = {
+    text : &quot;hello&quot;,
+    fn : async () =&gt; {return &quot;hello world&quot;;}
+};
+... call renderer ...
+*/</span>
+
+${text}
+<span class="hljs-comment">//output: hello</span>
+${text + <span class="hljs-string">&quot;world&quot;</span>}
+<span class="hljs-comment">//output: hello world</span>
+${ <span class="hljs-keyword">await</span> <span class="hljs-title function_">fn</span>() } 
+<span class="hljs-comment">//output: hello world</span>
+
+</code></pre>
+<p>The execution engine is implemented with <a href="https://github.com/default-js/defaultjs-expression-language">defaultjs-expression-language</a></p>
+<h2>Text content manipulation</h2>
+<p><strong>Data context used by following examples</strong></p>
+<pre><code class="hljs language-javascript">{
+    <span class="hljs-attr">hello</span>: <span class="hljs-string">&quot;hello&quot;</span>,
+    <span class="hljs-attr">world</span>: <span class="hljs-string">&quot;world&quot;</span>,
+    <span class="hljs-attr">html</span>: <span class="hljs-string">&quot;&lt;b&gt;hello world&lt;/b&gt;&lt;script type=\&quot;application/javascript\&quot;&gt;alert(\&quot;unsecure\&quot;)&lt;/script&gt;&quot;</span>,
+    <span class="hljs-attr">longText</span>: <span class="hljs-string">&quot;this is an long\nlong\nlong\ntext&quot;</span>
+}
+</code></pre>
+<p><strong>Example: simple text</strong></p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--template--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${hallo} ${world}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--output--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong>Example: long text with trim length</strong></p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--template--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-text-trim-length</span>=<span class="hljs-string">&quot;15&quot;</span>&gt;</span>${longText}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--output--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>this is an long...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong>Example: html as text</strong></p>
+<p>Including html as text, all tags are escaped.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--template--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${html}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--output--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-symbol">&amp;gt;</span>b<span class="hljs-symbol">&amp;lt;</span>hello world<span class="hljs-symbol">&amp;gt;</span>/b<span class="hljs-symbol">&amp;lt;</span><span class="hljs-symbol">&amp;gt;</span>script type=&quot;application/javascript&quot;<span class="hljs-symbol">&amp;lt;</span>alert(&quot;unsecure&quot;)<span class="hljs-symbol">&amp;gt;</span>/script<span class="hljs-symbol">&amp;lt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong>Example: html with secure filter (default)</strong></p>
+<p>By including html content, the default behavore is to remove unsecure tags. Unsecure tags are: <code>script, style, body, html, head, object, link</code></p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--template--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-text-content-type</span>=<span class="hljs-string">&quot;html&quot;</span>&gt;</span>${html}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--output: script tag is filtered--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span>/div&gt;
+</code></pre>
+<p><strong>Example: html with unsecure filter</strong></p>
+<p>It is recommended to use <code>jstl-text-unsecure</code> only, if the content save.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--template--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-text-content-type</span>=<span class="hljs-string">&quot;html&quot;</span> <span class="hljs-attr">jstl-text-unsecure</span>&gt;</span>${html}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--output--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;unsecure&quot;</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-if</h2>
+<p>The <code>jstl-if</code> directive evaluate an expression to a boolean value. If the expression value evaluated to <code>true</code> the tag with content would be included at result. By <code>false</code> the tag would not be rendered.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-if</span>=<span class="hljs-string">&quot;${false}&quot;</span>&gt;</span>not included<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-if</span>=<span class="hljs-string">&quot;${true}&quot;</span>&gt;</span>included<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-choose</h2>
+<p>This is the equivalent of <code>if - if else - else</code> structure. The direct content of a tag marked by <code>jstl-choose</code> (selector: <code>[jstl-choose] &gt; *</code>) readed. The first tag with <code>jstl-when</code>, with an expression evaluated to <code>true</code>, would be rendered. Every else are removed. If the expression value of all <code>jstl-when</code> evaluated to be <code>false</code>, in this case the a tag with <code>jstl-otherwise</code> are rendered, if available.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-choose</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-when</span>=<span class="hljs-string">&quot;${expression}&quot;</span>&gt;</span>case 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-when</span>=<span class="hljs-string">&quot;${expression}&quot;</span>&gt;</span>case 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-otherwise</span>&gt;</span>if nothing matches<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-foreach</h2>
+<p>This provide the capabillity to loop over an array. The content of element would be repeated and rendered with every element of array.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//data used for example</span>
+{
+    array : [
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-1&quot;</span>},
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-2&quot;</span>},
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-3&quot;</span>}
+    ]
+}
+</code></pre>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-foreach</span>=<span class="hljs-string">&quot;${array}&quot;</span> <span class="hljs-attr">jstl-foreach-var</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${item.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- output --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong>additional parameter</strong></p>
+<p><strong><code>jstl-foreach-var</code></strong></p>
+<p>Set a varname to be used as referrence for the loop element. The default varname is <code>item</code>.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-foreach</span>=<span class="hljs-string">&quot;${array}&quot;</span> <span class="hljs-attr">jstl-foreach-var</span>=<span class="hljs-string">&quot;element&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${element}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong><code>jstl-foreach-status</code></strong></p>
+<p>Set a varname for a meta data and state of the current iteration. The default varname is <code>status</code>.</p>
+<pre><code class="hljs language-javascript">{
+    <span class="hljs-attr">index</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">// item index (zero based)</span>
+    <span class="hljs-attr">number</span>: <span class="hljs-number">1</span>, <span class="hljs-comment">// item number (one based)</span>
+    <span class="hljs-attr">count</span>: <span class="hljs-number">10</span>, <span class="hljs-comment">// length of array,</span>
+    <span class="hljs-attr">data</span>: [] <span class="hljs-comment">// full array</span>
+}
+</code></pre>
+<h2>jstl-repeat</h2>
+<p>This provide the capabillity to loop over an array. The difference between <code>jstl-foreach</code> and <code>jstl-repeat</code> is, <code>jstl-repeat</code> use the element self as template to be render items of array.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//data used for example</span>
+{
+    array : [
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-1&quot;</span>},
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-2&quot;</span>},
+        {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;item-3&quot;</span>}
+    ]
+}
+</code></pre>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-repeat</span>=<span class="hljs-string">&quot;${array}&quot;</span> <span class="hljs-attr">jstl-repeat-var</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>${item.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- output --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>item-3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong>additional parameter</strong></p>
+<p><strong><code>jstl-repeat-var</code></strong></p>
+<p>Set a varname to be used as referrence for the loop element. The default varname is <code>item</code>.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-repeat</span>=<span class="hljs-string">&quot;${array}&quot;</span> <span class="hljs-attr">jstl-foreach-var</span>=<span class="hljs-string">&quot;element&quot;</span>&gt;</span>${element}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p><strong><code>jstl-repeat-status</code></strong></p>
+<p>Set a varname for a meta data and state of the current iteration. The default varname is <code>status</code>.</p>
+<pre><code class="hljs language-javascript">{
+    <span class="hljs-attr">index</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">// item index (zero based)</span>
+    <span class="hljs-attr">number</span>: <span class="hljs-number">1</span>, <span class="hljs-comment">// item number (one based)</span>
+    <span class="hljs-attr">count</span>: <span class="hljs-number">10</span>, <span class="hljs-comment">// length of array,</span>
+    <span class="hljs-attr">data</span>: [] <span class="hljs-comment">// full array</span>
+}
+</code></pre>
+<h2>jstl-data</h2>
+<p><code>jstl-data</code> provides the capability to load and manipulate the data at current data context. The different capabilities are activated by <code>jstl-data-mode</code> and one of these values <code>remote</code>, <code>set</code>, <code>direct</code>.</p>
+<h3><code>jstl-data-mode=&quot;remote&quot;</code></h3>
+<p>The <code>remote</code> mode can be used to load a remote json data into data context.</p>
+<pre><code class="hljs language-json"><span class="hljs-comment">//content of json file</span>
+<span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;value&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- load data direct into context--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-data</span>=<span class="hljs-string">&quot;/path/to/json/file&quot;</span> <span class="hljs-attr">jstl-data-mode</span>=<span class="hljs-string">&quot;remote&quot;</span>&gt;</span>${name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- load data with varname into context--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-data</span>=<span class="hljs-string">&quot;/path/to/json/file&quot;</span> <span class="hljs-attr">jstl-data-mode</span>=<span class="hljs-string">&quot;remote&quot;</span> <span class="hljs-attr">jstl-data-var</span>=<span class="hljs-string">&quot;file&quot;</span>&gt;</span>${file.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3><code>jstl-data-mode=&quot;set&quot;</code></h3>
+<p>The <code>set</code> can be used extract data from data context into a new var.</p>
+<pre><code class="hljs language-json"><span class="hljs-comment">//render data context</span>
+<span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;data&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;value&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- load data direct into context--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-data</span>=<span class="hljs-string">&quot;${data}&quot;</span> <span class="hljs-attr">jstl-data-mode</span>=<span class="hljs-string">&quot;set&quot;</span> <span class="hljs-attr">jstl-data-var</span>=<span class="hljs-string">&quot;newData&quot;</span>&gt;</span>${newData}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3><code>jstl-data-mode=&quot;direct&quot;</code></h3>
+<p>The <code>direct</code> are used to define a static value.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- load data direct into context--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-data</span>=<span class="hljs-string">&quot;hello world&quot;</span> <span class="hljs-attr">jstl-data-mode</span>=<span class="hljs-string">&quot;direct&quot;</span> <span class="hljs-attr">jstl-data-var</span>=<span class="hljs-string">&quot;data&quot;</span>&gt;</span>${data}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- output--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-include</h2>
+<p>With <code>jstl-include</code> it is possible to load a template and execute the template as content of current tag. The url of template can be static or evaluated by an expression.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-include</span>=<span class="hljs-string">&quot;/url/to/template.tpl.html&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-include</span>=<span class="hljs-string">&quot;${url.to.template}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3>Additional option</h3>
+<p><code>jstl-include-mode</code></p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>replace</td>
+<td>replacing the content of current tag</td>
+</tr>
+<tr>
+<td>append</td>
+<td>appending the template as content of current tag</td>
+</tr>
+<tr>
+<td>prepand</td>
+<td>prepending the template as content of current tag</td>
+</tr>
+</tbody>
+</table>
+<h2>jstl-attach-element</h2>
+<p><code>jstl-attach-element</code> provide the capability to include a existing dom object by javascript object reference or by a query selector string.</p>
+<blockquote>
+<p>The attached element doesn`t process. It would be included only!</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-attach-element</span>=<span class="hljs-string">&quot;${domElement}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-attach-element</span>=<span class="hljs-string">&quot;${querySelector}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-attach-element</span>=<span class="hljs-string">&quot;[querySelector]&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3>Additional option</h3>
+<p><code>jstl-attach-element-mode</code></p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>replace</td>
+<td>replacing the content by resolved element</td>
+</tr>
+<tr>
+<td>append</td>
+<td>append resolved element, after current element is completely rendered</td>
+</tr>
+<tr>
+<td>prepand</td>
+<td>prepend resolved element, after current element is completely rendered</td>
+</tr>
+</tbody>
+</table>
+<h2>Attribute manipulation</h2>
+<p>The <code>JSTL</code> provide the functionality to manipulate the attributes of a tag.</p>
+<blockquote>
+<p>To define a condition for an attribute, prefix the attribute name by <code>?</code> and include this new attribute with an expression.</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- set value of attribute by an expression--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">attribute</span>=<span class="hljs-string">&quot;${value}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- check if attribute including--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?<span class="hljs-attr">attribute</span>=<span class="hljs-string">&quot;${value}&quot;</span> <span class="hljs-attr">attrbute</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- check if attribute including and set value by an expression--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?<span class="hljs-attr">attribute</span>=<span class="hljs-string">&quot;${value}&quot;</span> <span class="hljs-attr">attrbute</span>=<span class="hljs-string">&quot;${value}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>Event handler</h2>
+<p>To make the content interactive by user, it is possible to define event handler. Event handler can be global function, function of current render context or fetch one event and delegate the event by a new event.</p>
+<blockquote>
+<p>it is possible to add an event handler under a condition. Prefix the event handler definition with <code>?</code> and with an expression value.</p>
+</blockquote>
+<h3>add event handler</h3>
+<blockquote>
+<p>syntax: @[event]=&quot;[action]&quot;</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alert(&#x27;click&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?@<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;${condition}&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alert(&#x27;click&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3>delegate events</h3>
+<blockquote>
+<p>syntax: @[event]:delegate=&quot;[target event name]&quot;</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click:delegate</span>=<span class="hljs-string">&quot;my-custom-event&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?@<span class="hljs-attr">click:delegate</span>=<span class="hljs-string">&quot;${condition}&quot;</span> @<span class="hljs-attr">click:delegate</span>=<span class="hljs-string">&quot;my-custom-event&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3>toggle attribute by event</h3>
+<blockquote>
+<p>syntax: @[event]:toggleAttribute:[attribute name]=&quot;[selector of target element]&quot;</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click:toggleAttribute:test-attribute</span>=<span class="hljs-string">&quot;#id-of-target-element&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?@<span class="hljs-attr">click:toggleAttribute:test-attribute</span>=<span class="hljs-string">&quot;${condition}&quot;</span> @<span class="hljs-attr">click:toggleAttribute:test-attribute</span>=<span class="hljs-string">&quot;#id-of-target-element&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h3>toggle class by event</h3>
+<blockquote>
+<p>syntax: @[event]:toggleClass:[class name]=&quot;[selector of target element]&quot;</p>
+</blockquote>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click:toggleClass:test-class</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click:toggleClass:test-class</span>=<span class="hljs-string">&quot;#id-of-target-element&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> ?@<span class="hljs-attr">click:toggleclass:test-class</span>=<span class="hljs-string">&quot;${condition}&quot;</span> @<span class="hljs-attr">click:toggleAttribute:test-class</span>=<span class="hljs-string">&quot;#id-of-target-element&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-async</h2>
+<p><code>jstl-async</code> provide the capability to decouple a subtree of rendering path.</p>
+<pre><code class="hljs language-html">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-async</span>&gt;</span><span class="hljs-comment">&lt;!-- at this point, its starts a new renderer and decoupling from the previous renderer --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<h2>jstl-tagname</h2>
+<p>The <code>jstl-tagname</code> is useful to dynamiclly creates a tag or change the tagname by using expressions.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--
+    render context: {
+        tagname: &quot;span&quot;,
+        content: &quot;some content&quot;
+    }
+--&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">jstl</span> <span class="hljs-attr">jstl-tagname</span>=<span class="hljs-string">&quot;${tagname}&quot;</span>&gt;</span>${content}<span class="hljs-tag">&lt;/<span class="hljs-name">jstl</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-tagname</span>=<span class="hljs-string">&quot;${tagname}&quot;</span>&gt;</span>${content}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- output --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>some content<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>some content<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+
+</code></pre>
+<h2>jstl-ignore</h2>
+<p><code>jstl-ignore</code> flag a subtree to be ignored by renderer. The renderer includes the subtree unprocessed directly into the rendering result.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--
+    render context: {
+        text1: &quot;some text&quot;,
+        text2: &quot;another text&quot;
+    }
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    ${text1}
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">jstl-ignore</span>&gt;</span>${text2}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- output --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    some text
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${text2}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+</code></pre>
+<h2>jstl-on-finished</h2>
+<blockquote>
+<p>experimentelle feature</p>
+</blockquote>
+<h1>Special Tags</h1>
+<h2>Tag <code>jstl</code></h2>
+<p>The tag <code>jstl</code> to use rendering functicality without visual dom structures. The <code>jstl</code> tag would be replaces by the content of the render result. If no content avalilable, the tag would be removed.</p>
+<pre><code class="hljs language-html"><span class="hljs-comment">&lt;!--
+    render context: {
+        text1: &quot;some text&quot;,
+        text2: &quot;another text&quot;
+        array: [
+            {text: &quot;text 1&quot;},
+            {text: &quot;text 2&quot;},
+            {text: &quot;text 3&quot;}
+        ]
+    }
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- case 1 --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jstl</span>&gt;</span>
+        ${text1}
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${text2}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">jstl</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- case 2 --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jstl</span> <span class="hljs-attr">jstl-foreach</span>=<span class="hljs-string">&quot;${array}&quot;</span> <span class="hljs-attr">jstl-foreach-var</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>${item.text}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">jstl</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- case 3 --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jstl</span> <span class="hljs-attr">jstl-data</span>=<span class="hljs-string">&quot;${ text1 + &#x27;, &#x27; + text2}&quot;</span> <span class="hljs-attr">jstl-data-mode</span>=<span class="hljs-string">&quot;set&quot;</span> <span class="hljs-attr">jstl-data-var</span>=<span class="hljs-string">&quot;result&quot;</span>&gt;</span>
+        ${result}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">jstl</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+
+<span class="hljs-comment">&lt;!-- output --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- case 1 --&gt;</span>
+    some text
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>another text<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- case 2 --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>text 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>text 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>text 3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- case 3 --&gt;</span>
+    some text, another text
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+</code></pre>
+<h1>Javascript API</h1>
+<h2>Template</h2>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">// import the template class</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Template</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defauljs-template-language&quot;</span>;
+</code></pre>
+<h3><code>new Tempate(template)</code></h3>
+<p>Create a instance of <code>Template</code>.</p>
+<p><strong>Kind</strong>: constructor</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td><code>HTMLTemplateElement</code></td>
+<td>template definition - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>key</td>
+<td><code>string</code></td>
+<td>identifire at cache - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<p>Additional to the constructor, the template class provide some static methods to create template instance.</p>
+<h3><code>load(template, cache, alias)</code> ⇒ <code>Template</code></h3>
+<p>Create a instance of <code>Template</code> by <code>string</code>, <code>URL</code>, <code>Node</code>, <code>NodeList</code>, <code>HTMLCollection</code> or <code>Template</code>.</p>
+<p><strong>Kind</strong>: static function</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td><code>string</code>, <code>URL</code>, <code>Node</code>, <code>NodeList</code>, <code>HTMLCollection</code> or <code>Template</code></td>
+<td>source of template - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>cache</td>
+<td><code>boolean</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>alias</td>
+<td><code>string</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h3><code>fetch(url, cache, alias)</code> ⇒ <code>Template</code></h3>
+<p>Create a instance of <code>Template</code> by a url as <code>string</code> or <code>URL</code>.</p>
+<p><strong>Kind</strong>: static function</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><code>string</code>, <code>URL</code></td>
+<td>source of template - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>cache</td>
+<td><code>boolean</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>alias</td>
+<td><code>string</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h3><code>loadNodeTemplate(node, defaultTemplate, cache, alias)</code> ⇒ <code>Template</code></h3>
+<p>Attempts to determine a <code>Template</code> based on a <code>Node</code>.</p>
+<p>This function makes several steps to attempting a <code>Template</code> by following order:</p>
+<ol>
+<li>Search for a <code>HTMLTemplateElement</code> as child of <code>Node</code> (selector: <code>:scope &gt; template</code>)</li>
+<li>Evaluate the attribute <code>template</code> at <code>Node</code> as a query selector</li>
+<li>Evaluate the attribute <code>template</code> at <code>Node</code> as a <code>URL</code></li>
+</ol>
+<p><strong>Kind</strong>: static function</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><code>Node</code></td>
+<td>Node to be attempting the Template - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>defaultTemplate</td>
+<td><code>Template</code></td>
+<td>fallback <code>Template</code>, if no template found - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>cache</td>
+<td><code>boolean</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>alias</td>
+<td><code>string</code></td>
+<td>store the template at cache - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Renderer</h2>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">// import the template class</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Renderer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defauljs-template-language&quot;</span>;
+</code></pre>
+<h3><code>new Renderer(template, data)</code></h3>
+<p>Create a instance of <code>Renderer</code>.</p>
+<p><strong>Kind</strong>: constructor</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td><code>Template</code></td>
+<td>template definition - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>base data to render a template - <code>optional</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h3><code>render(option)</code></h3>
+<p>Execute the rendering process.</p>
+<p><strong>Kind</strong>: constructor</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>option</td>
+<td><code>Object</code></td>
+<td>option to specify the rendering - <code>required</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>option</strong>: Option to specify the how, what and where to be render</p>
+<table>
+<thead>
+<tr>
+<th>Properties</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>container</td>
+<td><code>HTMLElement</code></td>
+<td>element where to be render the template into - <code>required</code></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td><code>Template</code></td>
+<td>the template that to be render. - <code>optional</code></td>
+<td>template from the renderer</td>
+</tr>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>data for rendering - <code>optional</code></td>
+<td></td>
+</tr>
+<tr>
+<td>mode</td>
+<td><code>string</code></td>
+<td>possible options [<code>append</code>, <code>prepend</code>,<code>replace</code>] - <code>optional</code></td>
+<td><code>replace</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Custom Directives</h2>
+<h2>Custom Tags</h2>

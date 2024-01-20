@@ -1,0 +1,67 @@
+<h1>defaultjs-html-modal</h1>
+<ul>
+<li><a href="#defaultjs-html-modal">defaultjs-html-modal</a></li>
+<li><a href="#how-to-include">How to include?</a>
+<ul>
+<li><a href="#npm">npm</a></li>
+<li><a href="#browser">browser</a></li>
+</ul>
+</li>
+<li><a href="#how-to-use">How to use?</a>
+<ul>
+<li><a href="#attribute-template---optional">Attribute: <code>template</code> - optional</a></li>
+<li><a href="#attribute-closable---optional">Attribute: <code>closable</code> - optional</a></li>
+<li><a href="#define-close-action---modal-hide">Define close action - <code>modal-hide</code></a></li>
+</ul>
+</li>
+<li><a href="#events">Events</a></li>
+<li><a href="#javascript-api">Javascript API</a></li>
+</ul>
+<h1>How to include?</h1>
+<h2>npm</h2>
+<p>Install <code>defaultjs-html-modal</code> as a dependency into your project.</p>
+<pre><code class="hljs" language-${lang}>npm install @default-js/defaultjs-html-modal
+</code></pre>
+<p>Include <code>defaultjs-html-modal</code> into your main js-file.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;@default-js/defaultjs-html-modal&quot;</span>
+</code></pre>
+<h2>browser</h2>
+<p>Download the <code>dist/browser-bundle-defaultjs-html-modal.min.js</code> file and past the file to your js files.</p>
+<p>Load the <code>browser-bundle-defaultjs-html-modal.min.js</code> file via <code>script</code> tag at html page.</p>
+<h1>How to use?</h1>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-modal</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- your content --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-modal</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-modal</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;path/to/a/template.tpl.html&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-modal</span>&gt;</span>
+</code></pre>
+<h2>Attribute: <code>template</code> - optional</h2>
+<p>You can specify a path/url for a template, that would be loaded as content of the modal. The template would be evaluate with the <code>default-js/defaultjs-template-language</code> template engine.</p>
+<h2>Attribute: <code>closable</code> - optional</h2>
+<p>This attribute makes the modal auto closing, if you click outside the modal. If this attribute not available, then the modal can only be closed by an element of modal content with attribute <code>modal-hide</code> or via javascript.</p>
+<h2>Define close action - <code>modal-hide</code></h2>
+<p>You can define an html element and add the attribite <code>modal-hide</code>. This defines for this html element, that an click event would be closed the modal. An element with the attribute <code>modal-hide</code> would be searched by content of the modal automaticly.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-modal</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>this is a modal<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">modal-hide</span>&gt;</span>cloase modal<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-modal</span>&gt;</span>
+</code></pre>
+<h1>Events</h1>
+<p><code>d-modal-event:show</code></p>
+<p><code>d-modal-event:showing</code></p>
+<p><code>d-modal-event:hide</code></p>
+<p><code>d-modal-event:hiding</code></p>
+<h1>Javascript API</h1>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-modal</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>this is a modal<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-modal</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> modal = <span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;d-modal&quot;</span>).<span class="hljs-title function_">first</span>()
+
+<span class="hljs-comment">// via functions</span>
+modal.<span class="hljs-title function_">show</span>(); <span class="hljs-comment">// make the modal visible</span>
+modal.<span class="hljs-title function_">hide</span>(); <span class="hljs-comment">// make the modal invisible</span>
+
+<span class="hljs-comment">// via events</span>
+modal.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;d-modal-event:show&quot;</span>); <span class="hljs-comment">// make the modal visible</span>
+modal.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;d-modal-event:hide&quot;</span>); <span class="hljs-comment">// make the modal invisible</span>
+</code></pre>

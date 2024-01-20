@@ -1,11 +1,6 @@
-<jstl jstl-data="https://api.github.com/repos/default-js/${$context.repo}" jstl-data-mode="remote" jstl-data-var="repo">
-    
-    <div>
-        <a href="${repo.html_url}">repository on Github</a>
-    </div>
-    
-    <h2>Documentation</h2>
-    <x-github-markdown-render-service src="https://raw.githubusercontent.com/default-js/${repo.name}/${repo.default_branch}/README.md"></x-github-markdown-render-service>
-    <!-- x-markdown-renderer src="https://raw.githubusercontent.com/default-js/${repo.name}/${repo.default_branch}/README.md"></x-markdown-renderer -->
-</jstl>
-
+<div class="container">
+<div>
+	<a href="https://github.com/default-js/${$context.repo}" target="_blank">repository on Github</a>
+</div>
+<article class="markdown-content" jstl-include="static/docu-app/${$context.repo}.html"></article>
+</div>

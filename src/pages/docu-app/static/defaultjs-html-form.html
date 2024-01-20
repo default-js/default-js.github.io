@@ -1,0 +1,61 @@
+<h1>defaultjs-html-form</h1>
+<h2>How to install</h2>
+<h3>NPM</h3>
+<pre><code class="hljs language-bash">npm install @default-js/defaultjs-html-form
+</code></pre>
+<h3>Browser</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/dist/browser-defaultjs-html-form.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h2>How to use</h2>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">d-page</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;field&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">d-field</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-container</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">d-field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;field&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">d-field</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">d-container</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-list</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">d-row</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">d-delete-row</span>&gt;</span>delete<span class="hljs-tag">&lt;/<span class="hljs-name">d-delete-row</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">d-field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;field&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">d-field</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">d-row</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">d-rows</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-rows</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">d-add-row</span>&gt;</span>new entry<span class="hljs-tag">&lt;/<span class="hljs-name">d-add-row</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">d-list</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">d-page</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">d-control</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-control-back</span>&gt;</span>prev<span class="hljs-tag">&lt;/<span class="hljs-name">d-control-back</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-control-next</span>&gt;</span>next<span class="hljs-tag">&lt;/<span class="hljs-name">d-control-next</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-control-summary</span>&gt;</span>show summary<span class="hljs-tag">&lt;/<span class="hljs-name">d-control-summary</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-control-submit</span>&gt;</span>submit<span class="hljs-tag">&lt;/<span class="hljs-name">d-control-submit</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">d-control</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-form</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;d-form&quot;</span>).<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;d-form-submit&quot;</span>,<span class="hljs-keyword">async</span> (event) =&gt; {
+    <span class="hljs-keyword">const</span> form = event.<span class="hljs-property">target</span>;
+    <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> form.<span class="hljs-title function_">value</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);
+});
+</code></pre>
+<h2>HTML Components</h2>
+<h3><code>&lt;d-form&gt;</code></h3>
+<h3><code>&lt;d-page&gt;</code></h3>
+<h3><code>&lt;d-field&gt;</code></h3>
+<h3><code>&lt;d-container&gt;</code></h3>
+<h3><code>&lt;d-list&gt;</code></h3>
+<h3><code>&lt;d-validation&gt;</code></h3>
+<h3><code>&lt;d-message&gt;</code></h3>
+<h3><code>&lt;d-control&gt;</code></h3>
+<h4><code>&lt;d-control-back&gt;</code></h4>
+<h4><code>&lt;d-control-next&gt;</code></h4>
+<h4><code>&lt;d-control-summary&gt;</code></h4>
+<h4><code>&lt;d-control-submit&gt;</code></h4>
+<h3><code>&lt;d-progress-bar&gt;</code></h3>
+<h4><code>d-step</code></h4>

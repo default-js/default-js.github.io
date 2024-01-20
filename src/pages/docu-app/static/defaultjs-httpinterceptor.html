@@ -1,0 +1,409 @@
+<h1>defaultjs-httpinterceptor</h1>
+<ul>
+<li><a href="#defaultjs-httpinterceptor">defaultjs-httpinterceptor</a>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#install">Install</a>
+<ul>
+<li><a href="#npm">npm</a></li>
+<li><a href="#browser">browser</a></li>
+</ul>
+</li>
+<li><a href="#javascript-api">Javascript API</a>
+<ul>
+<li><a href="#manager"><code>Manager</code></a>
+<ul>
+<li><a href="#managersetupsetup"><code>Manager.setup(setup)</code></a></li>
+<li><a href="#manageraddinterceptorinterceptor"><code>Manager.addInterceptor(interceptor)</code></a></li>
+<li><a href="#managerready"><code>Manager.ready</code></a></li>
+<li><a href="#managerignoredocumentorigin"><code>Manager.ignoreDocumentOrigin</code></a></li>
+<li><a href="#manageraddorigintoignoreorigin"><code>Manager.addOriginToIgnore(origin)</code></a></li>
+<li><a href="#manageraddurltoignoreurls--array-of-strings--array-of-url--string--url"><code>Manager.addUrlToIgnore(urls = [array of strings | array of URL | string | URL])</code></a></li>
+<li><a href="#manageruncheckedfetchurl-request"><code>Manager.uncheckedFetch(url, request)</code></a></li>
+<li><a href="#managerdointerceptdata"><code>Manager.doIntercept(data)</code></a></li>
+<li><a href="#managerreset"><code>Manager.reset()</code></a></li>
+</ul>
+</li>
+<li><a href="#interceptor"><code>Interceptor</code></a>
+<ul>
+<li><a href="#interceptordoaccepturl-metadata"><code>Interceptor.doAccept({url, metadata})</code></a></li>
+<li><a href="#interceptordohandleurl-metadata-request"><code>Interceptor.doHandle({url, metadata, request})</code></a></li>
+<li><a href="#interceptoruncheckedfetch"><code>Interceptor.uncheckedFetch</code></a></li>
+</ul>
+</li>
+<li><a href="#tokeninterceptor"><code>TokenInterceptor</code></a></li>
+<li><a href="#object-metadata">Object <code>Metadata</code></a></li>
+<li><a href="#how-to-implemente-a-custom-interceptor">How to implemente a custom Interceptor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Intro</h2>
+<p>This default-js modul provide functionality to intercept browser request and manipulate them. It's useful web pages with multi backend services on different domains or auhorization to provide the authorization to all requests.</p>
+<p>The httpinterceptor works with XMLHttpRequest and fetch, but its supporting async requests only!</p>
+<h2>Install</h2>
+<h3>npm</h3>
+<pre><code class="hljs language-console">npm install @default-js/defaultjs-httpinterceptor
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> {<span class="hljs-title class_">Manager</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-httpinterceptor&quot;</span>;
+<span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">setup</span>(<span class="hljs-keyword">async</span> () =&gt; {
+<span class="hljs-comment">//setup your interceptor(s)</span>
+});
+</code></pre>
+<h3>browser</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/dist/defaultjs-httpinterceptor.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span>&gt;</span><span class="language-javascript">
+
+defaultjs.<span class="hljs-property">httpinterceptorManager</span>.<span class="hljs-title function_">setup</span>(<span class="hljs-keyword">async</span> () =&gt; {
+<span class="hljs-comment">//setup your interceptor(s) -&gt; see Javascript api</span>
+});
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Include the javascript file and your setup script at head or as first script tags on your body!</p>
+<h2>Javascript API</h2>
+<h3><code>Manager</code></h3>
+<p>This manager provides the main logic and optimized the request handling by caching the used interceptors by origin.</p>
+<h4><code>Manager.setup(setup)</code></h4>
+<p>Add your setup logic to the Manager instance and blocks all requests until all setup finished!</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setup</code></td>
+<td>X</td>
+<td></td>
+<td><code>function</code> or <code>Promise</code> object</td>
+</tr>
+</tbody>
+</table>
+<p>The result of the <code>setup</code> can be a single object of <code>Interceptor</code>, an array of <code>Interceptor</code> objects or nothing, but then you must be add your <code>Interceptor</code> object(s) by calling <code>Manager.addInterceptor</code> manualy.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> {<span class="hljs-title class_">Manager</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-httpinterceptor&quot;</span>;
+<span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">setup</span>(<span class="hljs-keyword">async</span> () =&gt; {
+<span class="hljs-comment">//setup your interceptor(s)</span>
+});
+</code></pre>
+<h4><code>Manager.addInterceptor(interceptor)</code></h4>
+<p>Add a <code>Interceptor</code> object.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>interceptor</code></td>
+<td>X</td>
+<td></td>
+<td><code>Interceptor</code> or <code>Array of Interceptor</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript"><span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">addInterceptor</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyInterceptor</span>());
+<span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">addInterceptor</span>([<span class="hljs-keyword">new</span> <span class="hljs-title class_">InterceptorA</span>(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">InterceptorB</span>(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">InterceptorC</span>()]);
+</code></pre>
+<p>Every <code>interceptor</code> must be a instance of type <code>Interceptor</code> or an object with a function <code>doAccept(data)</code> and <code>doHandle(data)</code>;</p>
+<h4><code>Manager.ready</code></h4>
+<p>This property is a Promise, that represented the current setup state.</p>
+<h4><code>Manager.ignoreDocumentOrigin</code></h4>
+<p>This property is tells the <code>Manager</code> to ignore all requests with the same origin as the current page.</p>
+<h4><code>Manager.addOriginToIgnore(origin)</code></h4>
+<p>Add origin to be ignored by <code>Manager</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>origin</code></td>
+<td>X</td>
+<td></td>
+<td><code>string</code>, <code>URL</code>, <code>Array</code></td>
+</tr>
+</tbody>
+</table>
+<h4><code>Manager.addUrlToIgnore(urls = [array of strings | array of URL | string | URL])</code></h4>
+<p>Add url to be ignored by <code>Manager</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>X</td>
+<td></td>
+<td><code>string</code>, <code>URL</code>, <code>Array</code></td>
+</tr>
+</tbody>
+</table>
+<h4><code>Manager.uncheckedFetch(url, request)</code></h4>
+<p>This function make a unchecked fetch request. See default browser fetch api.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>X</td>
+<td></td>
+<td><code>string</code> or <code>URL</code></td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td>X</td>
+<td></td>
+<td><code>object</code> or <code>Request</code> object</td>
+</tr>
+</tbody>
+</table>
+<h4><code>Manager.doIntercept(data)</code></h4>
+<p>This function would be called automaticly by <code>fetch</code> and <code>XMLHttpRequest</code> to intercept the requests.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td>X</td>
+<td></td>
+<td><code>object</code></td>
+</tr>
+</tbody>
+</table>
+<h4><code>Manager.reset()</code></h4>
+<p>This function reset the interceptor-origin cache.</p>
+<h3><code>Interceptor</code></h3>
+<p>Basic class to extends by your own interceptor implementation.</p>
+<h4><code>Interceptor.doAccept({url, metadata})</code></h4>
+<p>This functions must be return <code>true</code>, if the interceptor apply to all requests by same origin.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td></td>
+<td><code>URL</code></td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td></td>
+<td><code>Metadata</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return:</strong> <code>true</code> or <code>false</code></p>
+<h4><code>Interceptor.doHandle({url, metadata, request})</code></h4>
+<p>This function would be called to maipulate the request.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td></td>
+<td><code>URL</code></td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td></td>
+<td><code>Metadata</code></td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td></td>
+<td><code>Object</code> like fetch <code>Request</code> object</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return:</strong> a object of <code>{url, metadata, request}</code></p>
+<h4><code>Interceptor.uncheckedFetch</code></h4>
+<p>This function make a unchecked fetch request. See default browser fetch api.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>X</td>
+<td></td>
+<td><code>string</code> or <code>URL</code></td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td>X</td>
+<td></td>
+<td><code>object</code> or <code>Request</code> object</td>
+</tr>
+</tbody>
+</table>
+<h3><code>TokenInterceptor</code></h3>
+<p>The <code>TokenInterceptor</code> extends <code>Interceptor</code> and provide logic to cache a auth token and make periodicly a refesh of auth token.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">TokenInterceptor</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-httpinterceptor/src/interceptors/TokenInterceptor&quot;</span>;
+<span class="hljs-keyword">new</span> <span class="hljs-title class_">TokenInterceptor</span>(setup)
+</code></pre>
+<p><strong>Structur of <code>setup</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Requiered</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>condition</code></td>
+<td>X</td>
+<td><code>string</code>, <code>Array</code> of <code>string</code>, <code>function({url, metadata})</code></td>
+</tr>
+<tr>
+<td><code>fetchToken</code></td>
+<td>X</td>
+<td><code>function({url, metadata})</code></td>
+</tr>
+<tr>
+<td><code>appendToken</code></td>
+<td></td>
+<td><code>function({url, metadata, request})</code>; default: add token as header <code>Authorization=Bearer ${token}</code></td>
+</tr>
+<tr>
+<td><code>refreshInterval</code></td>
+<td></td>
+<td><code>number</code> for milliseconds. A <code>number</code> zero or below -&gt; disable automatic token refesh; default: 6000</td>
+</tr>
+<tr>
+<td><code>refreshToken</code></td>
+<td></td>
+<td><code>function({url, metadata})</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Object <code>Metadata</code></h3>
+<p>This object provide some meta infomation of request.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>method</code></td>
+<td>X</td>
+<td><code>string</code> -&gt; http verbs</td>
+</tr>
+<tr>
+<td><code>origin</code></td>
+<td>X</td>
+<td>origin of request</td>
+</tr>
+<tr>
+<td><code>hostname</code></td>
+<td>X</td>
+<td>hostname of request</td>
+</tr>
+<tr>
+<td><code>protocol</code></td>
+<td>X</td>
+<td>protocol of request</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>query</code></td>
+<td>X</td>
+<td>query string of request</td>
+</tr>
+</tbody>
+</table>
+<h3>How to implemente a custom Interceptor</h3>
+<p>Create a new class and extend the class by <code>Interceptor</code> class. Impement the function <code>doAccept(data)</code> and <code>doHandle(data)</code>.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Manager</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-httpinterceptor&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">Interceptor</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-httpinterceptor&quot;</span>;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyInterceptor</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Interceptor</span> {
+	#origin;
+
+	<span class="hljs-title function_">constructor</span>(<span class="hljs-params">origin</span>){
+		<span class="hljs-variable language_">super</span>();
+		<span class="hljs-variable language_">this</span>.#origin = origin;
+	}
+
+	<span class="hljs-keyword">async</span> <span class="hljs-title function_">doAccept</span>(<span class="hljs-params">{url, metadata}</span>){
+		<span class="hljs-keyword">return</span> url.<span class="hljs-property">origin</span> == <span class="hljs-variable language_">this</span>.#origin;
+	}
+
+	<span class="hljs-keyword">async</span> <span class="hljs-title function_">doHandle</span>(<span class="hljs-params">{url, metadata, request}</span>){
+		<span class="hljs-keyword">const</span> token = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">uncheckedFetch</span>(<span class="hljs-string">&quot;/url/to/token&quot;</span>);
+		request.<span class="hljs-property">headers</span>[<span class="hljs-string">&quot;Authorization&quot;</span>] = <span class="hljs-string">`Bearer <span class="hljs-subst">${<span class="hljs-keyword">await</span> token.text()}</span>`</span>;
+
+		<span class="hljs-keyword">return</span> {url, metadata, request};
+	}
+}
+
+<span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">setup</span>(<span class="hljs-keyword">async</span> () =&gt; {
+	<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Manager</span>.<span class="hljs-title function_">uncheckedFetch</span>(<span class="hljs-string">&quot;/request/for/all/origins.json&quot;</span>);
+	<span class="hljs-keyword">const</span> origins = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>(); <span class="hljs-comment">// response: [&quot;example-a.com&quot;, &quot;example-b.com&quot;, &quot;example-c.com&quot;]</span>
+	<span class="hljs-keyword">const</span> interceptors = origins.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">origin</span>) =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyInterceptor</span>(origin));
+
+	<span class="hljs-keyword">return</span> origins
+});
+
+<span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&quot;example-a.com&quot;</span>);
+</code></pre>

@@ -1,0 +1,108 @@
+<h1>defaultjs-expression-language</h1>
+<p>** Table of Contents</p>
+<ul>
+<li><a href="#defaultjs-expression-language">defaultjs-expression-language</a>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#install">Install</a>
+<ul>
+<li><a href="#browser">Browser</a></li>
+<li><a href="#nodejsnpm">Nodejs/NPM</a></li>
+</ul>
+</li>
+<li><a href="#using">Using</a>
+<ul>
+<li><a href="#simple-value-replacement">Simple value replacement</a></li>
+<li><a href="#promise--async-support">Promise / async support</a></li>
+</ul>
+</li>
+<li><a href="#api-documentation">API Documentation</a>
+<ul>
+<li><a href="#context-sensitive-behavior">Context sensitive behavior</a></li>
+<li><a href="#default-value-behavior">Default value behavior</a></li>
+<li><a href="#timeout-behavior">Timeout behavior</a></li>
+</ul>
+</li>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+<h2>Intro</h2>
+<p>This lib provide functionallity similar to the text literals at javascript, but this lib supports Promise results from an Expression.</p>
+<p>** Use this lib for dynamic content solutions.</p>
+<h2>Install</h2>
+<h3>Browser</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;browser-defaultjs-expression-language.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h3>Nodejs/NPM</h3>
+<pre><code class="hljs" language-${lang}>npm install @default-js/defaultjs-expression-language
+
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ExpressionResolver</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-expression-language&quot;</span>
+
+<span class="hljs-comment">/*simple value replacement*/</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${name}&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;max mustermann&quot;</span>})
+.<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// max mustermann</span>
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;hello ${name}, nice to see you!&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;max mustermann&quot;</span>})
+.<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// hello max mustermann, nice to see you!</span>
+</code></pre>
+<h2>Using</h2>
+<h3>Simple value replacement</h3>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ExpressionResolver</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-expression-language&quot;</span>
+
+<span class="hljs-comment">/*resolve an expression*/</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${name}&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;max mustermann&quot;</span>})
+.<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// max mustermann</span>
+
+<span class="hljs-comment">/*replace expression at string*/</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;hello ${name}, nice to see you!&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;max mustermann&quot;</span>})
+.<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// hello max mustermann, nice to see you!</span>
+</code></pre>
+<h3>Promise / async support</h3>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">/*promise value replacement*/</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${name}&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+	<span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;max mustermann&quot;</span>);
+}).<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// max mustermann</span>
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;hello ${name}, nice to see you!&quot;</span>, {<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+	<span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;max mustermann&quot;</span>);
+}).<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>); <span class="hljs-comment">// hello max mustermann, nice to see you!</span>
+</code></pre>
+<h2>API Documentation</h2>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ExpressionResolver</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-expression-language&quot;</span>;
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(aStatement, aContext, aDefault, aTimeout) 
+<span class="hljs-comment">// returned a promise and the expression can be resolved to any type </span>
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(aStatement, aContext, aDefault, aTimeout) 
+<span class="hljs-comment">// returned a promise and the expression would be resolved to an string </span>
+</code></pre>
+<h3>Context sensitive behavior</h3>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-variable language_">global</span> = <span class="hljs-variable language_">window</span> || <span class="hljs-variable language_">global</span> || self || <span class="hljs-variable language_">this</span> || {};
+<span class="hljs-variable language_">global</span>.<span class="hljs-property">test</span> = <span class="hljs-string">&quot;global test var&quot;</span>;
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${test}&quot;</span>); <span class="hljs-comment">// global test var</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${test}&quot;</span>, {}); <span class="hljs-comment">// global test var</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${test}&quot;</span>, {<span class="hljs-attr">test</span>: <span class="hljs-string">&quot;local test var&quot;</span>}); <span class="hljs-comment">// local test var </span>
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;text ${test} text&quot;</span>); <span class="hljs-comment">// text global test var text</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;text ${test} text&quot;</span>, {}); <span class="hljs-comment">// text global test var text</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;text ${test} text&quot;</span>, {<span class="hljs-attr">test</span>: <span class="hljs-string">&quot;local test var&quot;</span>}); <span class="hljs-comment">// text local test var text </span>
+</code></pre>
+<h3>Default value behavior</h3>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-variable language_">global</span> = <span class="hljs-variable language_">window</span> || <span class="hljs-variable language_">global</span> || self || <span class="hljs-variable language_">this</span> || {};
+<span class="hljs-variable language_">global</span>.<span class="hljs-property">test</span> = <span class="hljs-literal">undefined</span>;
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${test}&quot;</span>, <span class="hljs-variable language_">global</span>, <span class="hljs-string">&quot;var is undefined&quot;</span>); <span class="hljs-comment">// var is undefined</span>
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;text ${test} text&quot;</span>, <span class="hljs-variable language_">global</span>, <span class="hljs-string">&quot;var is undefined&quot;</span>); <span class="hljs-comment">// text var is undefined text </span>
+</code></pre>
+<h3>Timeout behavior</h3>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-variable language_">global</span> = <span class="hljs-variable language_">window</span> || <span class="hljs-variable language_">global</span> || self || <span class="hljs-variable language_">this</span> || {};
+<span class="hljs-variable language_">global</span>.<span class="hljs-property">test</span> = <span class="hljs-string">&quot;global test var&quot;</span>;
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;${test}&quot;</span>, <span class="hljs-variable language_">global</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-number">1000</span>); 
+<span class="hljs-comment">// the expression resolver waits 1000ms, before starting the resolving process   </span>
+
+<span class="hljs-title class_">ExpressionResolver</span>.<span class="hljs-title function_">resolveText</span>(<span class="hljs-string">&quot;text ${test} text&quot;</span>, <span class="hljs-variable language_">global</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-number">1000</span>); 
+<span class="hljs-comment">// the expression resolver waits 1000ms, before starting the resolving process</span>
+</code></pre>
+<h2>License</h2>
+<p><a href="LICENSE">MIT</a></p>

@@ -1,0 +1,21 @@
+<h1>defaultjs-app-toolbox</h1>
+<ul>
+<li><a href="#defaultjs-app-toolbox">defaultjs-app-toolbox</a>
+<ul>
+<li><a href="#how-to-install">How to install</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+</ul>
+</li>
+</ul>
+<h2>How to install</h2>
+<h2>How to use</h2>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-application</span> <span class="hljs-attr">route</span>=<span class="hljs-string">&quot;[DEFAULT_ROUTE]&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">nav</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;app-nav&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-route</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;[ROUTE-NAME]&quot;</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;[URL|SELECTOR]&quot;</span> <span class="hljs-attr">context</span>=<span class="hljs-string">&quot;[JSON OBJECT]&quot;</span> <span class="hljs-attr">view</span>=<span class="hljs-string">&quot;[VIEW-NAME]&quot;</span> <span class="hljs-attr">stateful</span> <span class="hljs-attr">refesh</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-route</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-route</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;[ROUTE-NAME]&quot;</span> <span class="hljs-attr">component-tag</span>=<span class="hljs-string">&quot;[NAME OF A TAG]&quot;</span> <span class="hljs-attr">component-tag-attributes</span>=<span class="hljs-string">&quot;[JSON OBJECT]&quot;</span> <span class="hljs-attr">view</span>=<span class="hljs-string">&quot;[VIEW-NAME]&quot;</span> <span class="hljs-attr">stateful</span> <span class="hljs-attr">refesh</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-route</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>    
+    <span class="hljs-tag">&lt;<span class="hljs-name">d-view</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;[VIEW-NAME]&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">d-view</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">d-route-link</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;[ROUTE-NAME]&quot;</span> <span class="hljs-attr">context</span>=<span class="hljs-string">&quot;[JSON OBJECT]&quot;</span> <span class="hljs-attr">view</span>=<span class="hljs-string">&quot;[VIEW-NAME]&quot;</span> <span class="hljs-attr">refresh</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-route-link</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-application</span>&gt;</span>
+</code></pre>

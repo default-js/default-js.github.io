@@ -3,6 +3,8 @@
  */
 import "@default-js/defaultjs-app-toolbox/dist/css/app-toolbox.css";
 import "@default-js/defaultjs-html-dropdown/dist/css/dropdown.css";
+import "highlight.js/styles/atom-one-dark.css";
+//import "highlight.js/styles/github-dark.css";
 /*
  * custom styles 
  */
@@ -25,6 +27,6 @@ import "@default-js/defaultjs-html-dropdown";
  * custom scripts
  */
 
-import "../../js/components/GithubMarkdownRenderServiceElement";
-//import "../../js/components/MarkdownRendererElement";
-import "./js/ExtendedHTMLDetailsElement";
+//import "../../js/components/GithubMarkdownRenderServiceElement.js";
+//import "../../js/components/MarkdownRendererElement.js";
+import "./js/ExtendedHTMLDetailsElement.js";

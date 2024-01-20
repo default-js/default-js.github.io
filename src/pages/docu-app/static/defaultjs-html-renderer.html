@@ -1,0 +1,119 @@
+<h1>defaultjs-html-renderer</h1>
+<ul>
+<li><a href="#defaultjs-html-renderer">defaultjs-html-renderer</a>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#how-to-include">How to include</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+<li><a href="#overview-of-all-attributes">Overview of all Attributes</a></li>
+<li><a href="#how-do-define-a-template">How do define a template</a></li>
+</ul>
+</li>
+</ul>
+<h2>Intro</h2>
+<p>This a web component, that allows you, to render a html file or a <a href="https://github.com/default-js/defaultjs-template-language#readme">template file</a> into your website. The rendering would be executed dynamicly on client at brower. This supports a easy way of client side rendering, additial by using remote data.</p>
+<h2>How to include</h2>
+<p><strong>NPM</strong></p>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//import html renderer element</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">HTMLRendererElement</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-html-renderer&quot;</span>
+</code></pre>
+<p><strong>Script Tag</strong></p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span> ...<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>   
+        <span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;template.tpl.html&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+
+        //script file is located at dist directory
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;application/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/path/to/browser-bundle-defaultjs-html-renderer.min.js&quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml">   
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</span></span></code></pre>
+<h2>How to use</h2>
+<p>Include the <code>d-renderer</code> tag into your html body and</p>
+<ul>
+<li>define the path to a template by attribute <code>template</code>.</li>
+<li>define a selector of a <code>HTMLTemplateElement</code> by attribute <code>template</code>.</li>
+<li>define a template as content of <code>d-renderer</code>.</li>
+</ul>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;#MyTemplate&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- use content as template definition --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+</code></pre>
+<h2>Overview of all Attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>template</code></td>
+<td></td>
+<td><code>URL string</code> or <code>dom selector string</code></td>
+</tr>
+<tr>
+<td><code>render-mode</code></td>
+<td><code>replace</code></td>
+<td>Defines, how the rendered content be included. Values [<code>append</code>, <code>prepend</code>, <code>replace</code>, <code>self-replace</code>]</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td><code>URL string</code> to load additional data</td>
+</tr>
+<tr>
+<td><code>condition</code></td>
+<td></td>
+<td>define an <code>Expression</code>, under what condition the renderer would be executed</td>
+</tr>
+<tr>
+<td><code>initial-run</code></td>
+<td><code>true</code></td>
+<td>if the value <code>false</code>, you must execute the rendering by javascript or by an <code>Event</code> &lt;- see other attributes</td>
+</tr>
+<tr>
+<td><code>include-only</code></td>
+<td></td>
+<td>if this attribute präsent, then the renderer would include the template without processing</td>
+</tr>
+<tr>
+<td><code>listen-event</code></td>
+<td></td>
+<td>define an <code>Event</code>, if this <code>Event</code> triggert the renderer would be executed. Combine this with <code>initial-run=false</code></td>
+</tr>
+<tr>
+<td><code>listen-element</code></td>
+<td></td>
+<td>define a <code>dom selector string</code> on witch element an <code>event</code> be observed</td>
+</tr>
+<tr>
+<td><code>trigger-event</code></td>
+<td></td>
+<td>define an <code>Event</code> there be triggered if the rendering process finished</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;/path/to/data/file.json&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;[append|prepand|replace|replace-self]&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- render a template file into the d-renderer tag by replacing the content of d-renderer tag --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;replace&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- render a template file into the d-renderer tag by appending --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;append&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- render a template file into the d-renderer tag by prepending --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;prepend&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- render a template file and replacing the d-renderer tag with the rendered content --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;self-replace&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- fetch and render remote json data with a template file into d-renderer tag --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-renderer</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/path/to/template/file.tpl.html&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;/path/to/data/file.json&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-renderer</span>&gt;</span>
+</code></pre>
+<h2>How do define a template</h2>
+<p>If you want to learn, <code>&quot;How to define a template?&quot;</code>, read the documentation of <a href="https://github.com/default-js/defaultjs-template-language#readme">defaultjs-template-language</a>.</p>

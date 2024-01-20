@@ -1,0 +1,94 @@
+<h1>defaultjs-html-typeahead</h1>
+<ul>
+<li><a href="#defaultjs-html-typeahead">defaultjs-html-typeahead</a>
+<ul>
+<li><a href="#how-install">How install</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+<li><a href="#dom-events">Dom Events</a>
+<ul>
+<li><a href="#d-typeaheadload-suggestion">d-typeahead:load-suggestion</a></li>
+<li><a href="#d-typeaheadshow-suggestion">d-typeahead:show-suggestion</a></li>
+<li><a href="#d-typeaheadselected-suggestion">d-typeahead:selected-suggestion</a></li>
+</ul>
+</li>
+<li><a href="#javascript-api">Javascript API</a></li>
+</ul>
+</li>
+</ul>
+<h2>How install</h2>
+<pre><code class="hljs language-console">npm install @default-js/defaultjs-html-typeahead
+</code></pre>
+<h2>How to use declarative?</h2>
+<p>The <code>defaultjs-html-typeahad</code> provide multiple ways to achieve the solution:</p>
+<h3>1. Solution</h3>
+<p>There is a service available, there a suggestion provide and the response is a json array with the folowing stucture:</p>
+<pre><code class="hljs language-javascript">[
+  {
+    <span class="hljs-string">&quot;text&quot;</span> : <span class="hljs-string">&quot;[string]&quot;</span>,
+    <span class="hljs-string">&quot;value&quot;</span> : <span class="hljs-string">&quot;[String]&quot;</span>, <span class="hljs-comment">//optional</span>
+  },
+  ...
+]
+</code></pre>
+<p><code>defaultjs-html-typeahead</code> can be used as follow:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-typeahead&quot;</span> <span class="hljs-attr">request</span>=<span class="hljs-string">&quot;/request/to/suggestion/data.json&quot;</span>&gt;</span>
+</code></pre>
+<p>The value would be set as value of input field.</p>
+<h3>2. Solution</h3>
+<p>There is a service available, there provide a suggestion data, but the structure does not meet the required specification:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-typeahead&quot;</span> 
+  <span class="hljs-attr">request</span>=<span class="hljs-string">&quot;/request/to/suggestion/data.json&quot;</span> 
+  <span class="hljs-attr">response-suggestions</span>=<span class="hljs-string">&quot;[expression to select the array with suggestions]&quot;</span> 
+  <span class="hljs-attr">suggestion-text</span>=<span class="hljs-string">&quot;[expression to select and/or build the suggestion text]&quot;</span> 
+  <span class="hljs-attr">suggestion-value</span>=<span class="hljs-string">&quot;[expression to select and/or build the suggestion value]&quot;</span>&gt;</span>
+</code></pre>
+<p>The expression for <code>response-suggestions</code>, <code>suggestion-text</code> and <code>suggestion-value</code> uses the expression language <code>@default-js/defaultjs-expression-language</code>.</p>
+<h2>How to use programmatically?</h2>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">is</span>=<span class="hljs-string">&quot;d-typeahead&quot;</span> <span class="hljs-attr">self-handle-selection</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-comment">//main.js</span>
+<span class="hljs-keyword">const</span> input = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">queryElement</span>(<span class="hljs-string">&quot;input&quot;</span>);
+input.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;d-typeahead:load-suggestion&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  event.<span class="hljs-title function_">stopPropagation</span>();
+  <span class="hljs-keyword">const</span> suugestions = [
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;suggestion title one&quot;</span>, <span class="hljs-comment">//required</span>
+      <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;suggestion value one&quot;</span>, <span class="hljs-comment">//optional</span>
+      <span class="hljs-attr">data</span>: {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;suggestion data one&quot;</span>}  <span class="hljs-comment">//optional</span>
+    },
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;suggestion title two&quot;</span>, <span class="hljs-comment">//required</span>
+      <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;suggestion value two&quot;</span>, <span class="hljs-comment">//optional</span>
+      <span class="hljs-attr">data</span>: {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;suggestion data two&quot;</span>}  <span class="hljs-comment">//optional</span>
+    },
+    {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;suggestion title three&quot;</span>, <span class="hljs-comment">//required</span>
+      <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;suggestion value three&quot;</span>, <span class="hljs-comment">//optional</span>
+      <span class="hljs-attr">data</span>: {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;suggestion data three&quot;</span>}  <span class="hljs-comment">//optional</span>
+    }
+  ];
+
+  input.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;d-typeahead:show-suggestion&quot;</span>, suggestions);
+});
+
+input.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;d-typeahead:selected-suggestion&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  event.<span class="hljs-title function_">stopPropagation</span>();
+  
+  <span class="hljs-keyword">const</span> data = event.<span class="hljs-property">details</span>; <span class="hljs-comment">// suggestion property chain: data, value, text</span>
+  <span class="hljs-comment">//by self-handle-selection, the value of input field must set manually!</span>
+  input.<span class="hljs-property">value</span> = data.<span class="hljs-property">name</span>;
+
+  <span class="hljs-comment">//do somethings</span>
+});
+</code></pre>
+<h2>Dom Events</h2>
+<h3><code>d-typeahead:load-suggestion</code></h3>
+<p>This event is triggered, if the value from field changed. This event must be catched to provide suggestions, by trigger the event <code>d-typeahead:show-suggestion</code> with an array of suggestion objects.</p>
+<h3><code>d-typeahead:show-suggestion</code></h3>
+<p>This event must be triggered with an array of suugestion objects on input field to show the suggestions.</p>
+<h3><code>d-typeahead:selected-suggestion</code></h3>
+<p>This event would be triggered, if the user select an suggestion.</p>
+<h2>Javascript API</h2>
+<p>The <code>defaultjs-html-typeahead</code> provide on web component that extends the inputfield.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">HTMLTypeaheadElement</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">componentBaseOf</span>(<span class="hljs-title class_">HTMLInputElement</span>)
+</code></pre>

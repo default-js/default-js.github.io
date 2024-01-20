@@ -1,18 +1,41 @@
-const path = require("path");
+import path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+import FileManagerPlugin from "filemanager-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+import pages from "./pages.js";
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const FileManagerPlugin = require("filemanager-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const buildPath = path.resolve("docs");
 
-const buildPath = path.resolve(__dirname, "docs");
+class BuildStepPlugin {
+	#entry;
+	#data;
+	#module = null;
+	constructor({entry, data}) {
+		this.#entry = entry;
+		this.#data = data;
+	}
 
-const pages = require("./pages");
+	async #getModule() {
+		if (this.#module == null) {
+			this.#module = await import(`./src/pages/${this.#data.name}/${this.#entry}`);
+		}
+		return this.#module;
+	}
 
-module.exports = (env, argv) => {
+	async execute() {
+		const module = await this.#getModule();
+		if (typeof module["default"] === "function") await module["default"](this.#data);
+	}
+}
+
+export default async (env, argv) => {
 	const prod = argv.mode == "production";
+
+	const promises = pages.filter((page) => !!page.preBuildStep).map(async (page) => {new BuildStepPlugin({entry: page.preBuildStep, data: page} ).execute()});
+	await Promise.all(promises);
 
 	return {
 		// This option controls if and how source maps are generated.
@@ -87,13 +110,15 @@ module.exports = (env, argv) => {
 						const noErrorOnMissing = true;
 						const pattern = [
 							{ from: "./src/data", to: "data", noErrorOnMissing },
+							{ from: "./src/static", to: "static", noErrorOnMissing },
 							{ from: "./src/templates", to: "templates", noErrorOnMissing },
 							{ from: "./src/webfonts", to: "webfonts", noErrorOnMissing },
 						];
 						for (let { name, path } of pages) {
-							pattern.push({ from: `./src/pages/${path ? path : name}/templates`, to: `templates/${path ? path : name}`, noErrorOnMissing });							
+							pattern.push({ from: `./src/pages/${path ? path : name}/templates`, to: `templates/${path ? path : name}`, noErrorOnMissing });
 							pattern.push({ from: `./src/pages/${path ? path : name}/data`, to: `data/${path ? path : name}`, noErrorOnMissing });
 							pattern.push({ from: `./src/pages/${path ? path : name}/assets`, to: `assets/${path ? path : name}`, noErrorOnMissing });
+							pattern.push({ from: `./src/pages/${path ? path : name}/static`, to: `static/${path ? path : name}`, noErrorOnMissing });
 						}
 
 						return pattern;

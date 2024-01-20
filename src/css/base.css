@@ -28,13 +28,13 @@
     margin: 0;
     font-size: clamp(16px, 1vw, 3vw);
     line-height: 125%;
-    background-color: var(--body-background);
     color: var(--body-color);
     box-sizing: content-box;
 }
 
 body {
     padding: 0 clamp(10px, 10vw, 5rem);
+    background-color: var(--body-background);
 }
 
 
@@ -91,12 +91,6 @@ ol ol {
 
 hr {
     margin: 1rem 0;
-}
-
-
-x-github-markdown-render-service {
-    display: flex;
-    flex-direction: column;
 }
 
 d-renderer[render-mode="self-replace"] {

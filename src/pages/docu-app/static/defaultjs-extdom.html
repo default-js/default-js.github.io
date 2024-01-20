@@ -1,0 +1,780 @@
+<h1>defaultjs-extdom</h1>
+<p>** Table of Contents **</p>
+<ul>
+<li><a href="#defaultjs-extdom">defaultjs-extdom</a>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#how-to-install">How to install</a>
+<ul>
+<li><a href="#browser">Browser</a></li>
+<li><a href="#nodejsnpm">Nodejs/NPM</a></li>
+</ul>
+</li>
+<li><a href="#api-documentation">API Documentation</a>
+<ul>
+<li><a href="#additional-query-support">additional query support</a>
+<ul>
+<li><a href="#pseudo-selector-parentselector">pseudo selector <code>:parent(selector)</code></a></li>
+<li><a href="#findselector--selector-"><code>find(selector [, selector, ...])</code></a></li>
+<li><a href="#isselector--selector-"><code>is(selector [, selector, ...])</code></a></li>
+<li><a href="#parentselector-ignoreshadowroot"><code>parent(selector, ignoreShadowRoot)</code></a></li>
+<li><a href="#parentsselector"><code>parents(selector)</code></a></li>
+<li><a href="#selector"><code>selector()</code></a></li>
+</ul>
+</li>
+<li><a href="#additional-attribute-support">additional attribute support</a>
+<ul>
+<li><a href="#attrname-value"><code>attr(name, value)</code></a></li>
+</ul>
+</li>
+<li><a href="#additional-class-support">additional class support</a>
+<ul>
+<li><a href="#addclassclassname--classname-"><code>addClass(classname [, classname, ...])</code></a></li>
+<li><a href="#removeclassclassname--classname-"><code>removeClass(classname [, classname, ...])</code></a></li>
+<li><a href="#toggleclassclassname--classname-"><code>toggleClass(classname [, classname, ...])</code></a></li>
+</ul>
+</li>
+<li><a href="#additional-event-support">additional event support</a>
+<ul>
+<li><a href="#oneventname-callback-option"><code>on(eventname, callback, option)</code></a></li>
+<li><a href="#removeoncallback-eventname-capture"><code>removeOn(callback, eventname, capture)</code></a></li>
+<li><a href="#triggerevent-delegateevent--data"><code>trigger(event [,delegateEvent] [, data])</code></a></li>
+</ul>
+</li>
+<li><a href="#additional-manipulation-support">additional manipulation support</a>
+<ul>
+<li><a href="#empty"><code>empty()</code></a></li>
+<li><a href="#content"><code>content()</code></a></li>
+<li><a href="#htmloption"><code>html(option)</code></a></li>
+<li><a href="#appendoption"><code>append(option)</code></a></li>
+<li><a href="#preppendoption"><code>preppend(option)</code></a></li>
+<li><a href="#replacea--b"><code>replace(a [, b])</code></a></li>
+<li><a href="#afterelement"><code>after(element)</code></a></li>
+<li><a href="#beforeelement"><code>before(element)</code></a></li>
+</ul>
+</li>
+<li><a href="#show--hide-support">show / hide support</a>
+<ul>
+<li><a href="#show"><code>show()</code></a></li>
+<li><a href="#hide"><code>hide()</code></a></li>
+<li><a href="#toggleshow"><code>toggleShow()</code></a></li>
+</ul>
+</li>
+<li><a href="#extended-functiality-of-nodelist-and-htmlcollection">Extended functiality of <code>NodeList</code> and <code>HTMLCollection</code></a>
+<ul>
+<li><a href="#foreachelement-index"><code>forEach((element, index)=&gt;{})</code></a></li>
+<li><a href="#mapelement"><code>map((element)=&gt;{})</code></a></li>
+<li><a href="#filterelement"><code>filter((element)=&gt;{})</code></a></li>
+<li><a href="#first"><code>first()</code></a></li>
+<li><a href="#last"><code>last()</code></a></li>
+<li><a href="#delegate-function-call">delegate function call</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+<h2>Intro</h2>
+<p>This lib extents the browser dom api, provide sorter function names and easier solution to process data.</p>
+<h2>How to install</h2>
+<h3>Browser</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;defaultjs-extdom.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h3>Nodejs/NPM</h3>
+<pre><code class="hljs language-console">npm install @default-js/defaultjs-extdom@latest
+</code></pre>
+<h2>API Documentation</h2>
+<h3>additional query support</h3>
+<h4>pseudo selector <code>:parent(selector)</code></h4>
+<p>This pseudo selector provide the capability to select a parent. It can be combined with with all other selectors. The pseudo selector works in <code>find</code>, <code>parent</code> and <code>parents</code>, only.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td></td>
+<td></td>
+<td>one or more standard selector query</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div :parent()&quot;</span>);
+<span class="hljs-comment">// the same like</span>
+<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>).<span class="hljs-title function_">first</span>().<span class="hljs-title function_">parent</span>();
+
+element.<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div :parent(body)&quot;</span>);
+<span class="hljs-comment">// the same like</span>
+<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>).<span class="hljs-title function_">first</span>().<span class="hljs-title function_">parent</span>(<span class="hljs-string">&quot;body&quot;</span>);
+</code></pre>
+<h4><code>find(selector [, selector, ...])</code></h4>
+<p>sort function for <code>querySelectorAll</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td>x</td>
+<td></td>
+<td>one or more standard selector query</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return</strong> <code>NodeList</code></p>
+<pre><code class="hljs language-javascript"><span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>);
+<span class="hljs-comment">// is the same like</span>
+<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;div&quot;</span>);
+
+element.<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>)
+<span class="hljs-comment">// is the same like</span>
+element.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;div&quot;</span>);
+</code></pre>
+<h4><code>is(selector [, selector, ...])</code></h4>
+<p>sort function for <code>matches</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td>x</td>
+<td></td>
+<td>one or more standard selector query</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return</strong> <code>boolean</code></p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> div = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;div&quot;</span>);
+div.<span class="hljs-title function_">is</span>(<span class="hljs-string">&quot;div&quot;</span>);
+<span class="hljs-comment">// is the same like</span>
+div.<span class="hljs-title function_">matches</span>(<span class="hljs-string">&quot;div&quot;</span>);
+</code></pre>
+<h4><code>parent(selector, ignoreShadowRoot)</code></h4>
+<p>This function provide a parent element by a selector</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td></td>
+<td></td>
+<td>standard selector query</td>
+</tr>
+<tr>
+<td><code>ignoreShadowRoot</code></td>
+<td></td>
+<td>false</td>
+<td>experimentel</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return</strong> <code>element</code> or null</p>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">parent</span>() == element.<span class="hljs-property">parentElement</span>;
+element.<span class="hljs-title function_">parent</span>(<span class="hljs-string">&quot;body&quot;</span>) == <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>;
+element.<span class="hljs-title function_">parent</span>(<span class="hljs-string">&quot;div&quot;</span>); <span class="hljs-comment">// result: first parent div element</span>
+</code></pre>
+<h4><code>parents(selector)</code></h4>
+<p>This function provide a <code>NodeList</code> with all parents of element by a selector</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selector</code></td>
+<td></td>
+<td></td>
+<td>standard selector query</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return</strong> <code>NodeList</code></p>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">parents</span>(); <span class="hljs-comment">// result: all parent elements</span>
+element.<span class="hljs-title function_">parents</span>(<span class="hljs-string">&quot;div&quot;</span>); <span class="hljs-comment">// result: all parent div element</span>
+</code></pre>
+<h4><code>selector()</code></h4>
+<p>This function return the selector by current element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<p><strong>@return</strong> <code>string</code></p>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">selector</span>(); <span class="hljs-comment">// result: the selector of element</span>
+<span class="hljs-comment">// body -&gt; div -&gt; span</span>
+span.<span class="hljs-title function_">selector</span>(); <span class="hljs-comment">// result: div -&gt; span</span>
+</code></pre>
+<h3>additional attribute support</h3>
+<h4><code>attr(name, value)</code></h4>
+<p>This function provide the capability to get and set an attribute. Sort for <code>getAttribute</code>, <code>setAttribute</code> and <code>removeAttribute</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td></td>
+<td></td>
+<td>attribute name</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td></td>
+<td></td>
+<td>attribute value</td>
+</tr>
+</tbody>
+</table>
+<p><strong>@return</strong> <code>object</code>, <code>string</code> or <code>undefined</code></p>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">attr</span>(); <span class="hljs-comment">// return an object with all attributes as properties</span>
+element.<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;id&quot;</span>); <span class="hljs-comment">// return the value of attribute name; </span>
+<span class="hljs-comment">//the same like </span>
+element.<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>);
+
+element.<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>); <span class="hljs-comment">// set attribute with given value</span>
+<span class="hljs-comment">//the same like </span>
+element.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>);
+
+element.<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-literal">undefined</span>); <span class="hljs-comment">// remove the attribute</span>
+element.<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-literal">null</span>); <span class="hljs-comment">// remove the attribute</span>
+<span class="hljs-comment">//the same like </span>
+element.<span class="hljs-title function_">removeAttribute</span>(<span class="hljs-string">&quot;id&quot;</span>);
+</code></pre>
+<h3>additional class support</h3>
+<h4><code>addClass(classname [, classname, ...])</code></h4>
+<p>This function add classname(s). Same like <code>classList.add(classname)</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classname</code></td>
+<td></td>
+<td></td>
+<td>one or more classname</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Info:</strong> Classname can also be a string of space-sapareted classnames</p>
+</blockquote>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">addClass</span>(<span class="hljs-string">&quot;class&quot;</span>); 
+element.<span class="hljs-title function_">addClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>); 
+element.<span class="hljs-title function_">addClass</span>(<span class="hljs-string">&quot;class-1&quot;</span>, <span class="hljs-string">&quot;class-2&quot;</span>); 
+element.<span class="hljs-title function_">addClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3&quot;</span>); 
+element.<span class="hljs-title function_">addClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3 class-4&quot;</span>); 
+</code></pre>
+<h4><code>removeClass(classname [, classname, ...])</code></h4>
+<p>This function remove classname(s). Same like <code>classList.remove(classname)</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classname</code></td>
+<td></td>
+<td></td>
+<td>one or more classname</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Info:</strong> Classname can also be a string of space-sapareted classnames</p>
+</blockquote>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">removeClass</span>(<span class="hljs-string">&quot;class&quot;</span>); 
+element.<span class="hljs-title function_">removeClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>); 
+element.<span class="hljs-title function_">removeClass</span>(<span class="hljs-string">&quot;class-1&quot;</span>, <span class="hljs-string">&quot;class-2&quot;</span>); 
+element.<span class="hljs-title function_">removeClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3&quot;</span>); 
+element.<span class="hljs-title function_">removeClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3 class-4&quot;</span>); 
+</code></pre>
+<h4><code>toggleClass(classname [, classname, ...])</code></h4>
+<p>This function toggle classname(s). Same like <code>classList.toggle(classname)</code>. It add or remove classname(s), depends on if classname präsent or not.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classname</code></td>
+<td></td>
+<td></td>
+<td>one or more classname</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Info:</strong> Classname can also be a string of space-sapareted classnames</p>
+</blockquote>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">toggleClass</span>(<span class="hljs-string">&quot;class&quot;</span>); 
+element.<span class="hljs-title function_">toggleClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>); 
+element.<span class="hljs-title function_">toggleClass</span>(<span class="hljs-string">&quot;class-1&quot;</span>, <span class="hljs-string">&quot;class-2&quot;</span>); 
+element.<span class="hljs-title function_">toggleClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3&quot;</span>); 
+element.<span class="hljs-title function_">toggleClass</span>(<span class="hljs-string">&quot;class-1 class-2&quot;</span>, <span class="hljs-string">&quot;class-3 class-4&quot;</span>); 
+</code></pre>
+<h3>additional event support</h3>
+<h4><code>on(eventname, callback, option)</code></h4>
+<p>This function is sort for <code>addEventListener</code> and provide more functions</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eventname</code></td>
+<td>x</td>
+<td></td>
+<td><code>string</code> or <code>array</code> of event name(s)</td>
+</tr>
+<tr>
+<td><code>callback</code></td>
+<td>x</td>
+<td></td>
+<td><code>function</code></td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td></td>
+<td></td>
+<td><code>boolean</code> for capture event or <code>object</code> like <code>{ capture: false, once: false, passive: false }</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Info:</strong> <code>eventname</code> can also be a string of space-sapareted event names</p>
+</blockquote>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {});
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click focus&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {});
+element.<span class="hljs-title function_">on</span>([<span class="hljs-string">&quot;click&quot;</span>,<span class="hljs-string">&quot;focus&quot;</span>], <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {});
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {}, <span class="hljs-literal">true</span>);
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {}, { <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">once</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">passive</span>: <span class="hljs-literal">true</span> });
+</code></pre>
+<h4><code>removeOn(callback, eventname, capture)</code></h4>
+<p>This function is sort for <code>removeEventListener</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>callback</code></td>
+<td>x</td>
+<td></td>
+<td><code>function</code></td>
+</tr>
+<tr>
+<td><code>eventname</code></td>
+<td></td>
+<td></td>
+<td><code>string</code> or <code>array</code> of event name(s)</td>
+</tr>
+<tr>
+<td><code>capture</code></td>
+<td></td>
+<td></td>
+<td><code>boolean</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">handle</span> = (<span class="hljs-params">event</span>) =&gt; {};
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, handle);
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click focus&quot;</span>, handle);
+
+element.<span class="hljs-title function_">removeOn</span>(handle, <span class="hljs-string">&quot;click&quot;</span>); <span class="hljs-comment">//removes handle only for click event</span>
+element.<span class="hljs-title function_">removeOn</span>(handle, <span class="hljs-string">&quot;fokus&quot;</span>);<span class="hljs-comment">//removes handle only for click event</span>
+
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click focus&quot;</span>, handle);
+element.<span class="hljs-title function_">removeOn</span>(handle);<span class="hljs-comment">//removes handle for all events</span>
+</code></pre>
+<h4><code>trigger(event [,delegateEvent] [, data])</code></h4>
+<p>This function is sort for <code>removeEventListener</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event</code></td>
+<td>x</td>
+<td></td>
+<td><code>function</code></td>
+</tr>
+<tr>
+<td><code>delegateEvent</code></td>
+<td></td>
+<td></td>
+<td><code>event</code> to be delegate <code>data</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;click&quot;</span>);
+element.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;click&quot;</span>, {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;my-data&quot;</span>});
+
+element.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  element.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;change&quot;</span>, event);
+  element.<span class="hljs-title function_">trigger</span>(<span class="hljs-string">&quot;change&quot;</span>, event, {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;my-data&quot;</span>});
+});
+</code></pre>
+<h3>additional manipulation support</h3>
+<h4><code>empty()</code></h4>
+<p>This function removes all nodes of element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">empty</span>();
+</code></pre>
+<h4><code>content()</code></h4>
+<p>This function equal to <code>childNodes</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">content</span>() == event.<span class="hljs-property">childNodes</span>;
+</code></pre>
+<h4><code>html(option)</code></h4>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>option</code></td>
+<td></td>
+<td></td>
+<td><code>boolean</code>, <code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong><code>option</code> is not set, <code>undefined</code>, <code>null</code> or <code>false</code></strong></p>
+<p>The function returns the inner html like <code>innerHtml</code></p>
+</li>
+<li>
+<p><strong><code>option</code> is <code>true</code></strong></p>
+<p>The function returns the outer html like <code>outerHtml</code></p>
+</li>
+<li>
+<p><strong><code>option</code> is <code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></strong></p>
+<p>The function cleanup content and append option.</p>
+</li>
+</ul>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">html</span>();
+element.<span class="hljs-title function_">html</span>(<span class="hljs-literal">true</span>);
+element.<span class="hljs-title function_">html</span>(<span class="hljs-string">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span>);
+element.<span class="hljs-title function_">html</span>(otherElement);
+element.<span class="hljs-title function_">html</span>(nodeList);
+element.<span class="hljs-title function_">html</span>(htmlCollection);
+</code></pre>
+<h4><code>append(option)</code></h4>
+<p>This function append element(s).</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>option</code></td>
+<td></td>
+<td></td>
+<td><code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">append</span>(<span class="hljs-string">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span>);
+element.<span class="hljs-title function_">append</span>(otherElement);
+element.<span class="hljs-title function_">append</span>(nodeList);
+element.<span class="hljs-title function_">append</span>(htmlCollection);
+</code></pre>
+<h4><code>preppend(option)</code></h4>
+<p>This function preppend element(s).</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>option</code></td>
+<td></td>
+<td></td>
+<td><code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">preppend</span>(<span class="hljs-string">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span>);
+element.<span class="hljs-title function_">preppend</span>(otherElement);
+element.<span class="hljs-title function_">preppend</span>(nodeList);
+element.<span class="hljs-title function_">preppend</span>(htmlCollection);
+</code></pre>
+<h4><code>replace(a [, b])</code></h4>
+<p>This function repace a element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td>x</td>
+<td></td>
+<td><code>Node</code></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td></td>
+<td></td>
+<td><code>Node</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">replace</span>(otherElement); <span class="hljs-comment">// element would be replaced by otherElement</span>
+parent.<span class="hljs-title function_">preppend</span>(elementA, elementB);<span class="hljs-comment">// elementA must be child of parent, than elementA would be replaced by elementB</span>
+</code></pre>
+<h4><code>after(element)</code></h4>
+<p>This function insert element after.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>element</code></td>
+<td>x</td>
+<td></td>
+<td><code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">after</span>(<span class="hljs-string">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span>);
+element.<span class="hljs-title function_">after</span>(otherElement);
+element.<span class="hljs-title function_">after</span>(nodeList);
+element.<span class="hljs-title function_">after</span>(htmlCollection);
+</code></pre>
+<h4><code>before(element)</code></h4>
+<p>This function insert element before.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>element</code></td>
+<td>x</td>
+<td></td>
+<td><code>string</code>, <code>Node</code>, <code>NodeList</code> or <code>HTMLCollection</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">before</span>(<span class="hljs-string">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span>);
+element.<span class="hljs-title function_">before</span>(otherElement);
+element.<span class="hljs-title function_">before</span>(nodeList);
+element.<span class="hljs-title function_">before</span>(htmlCollection);
+</code></pre>
+<h3>show / hide support</h3>
+<h4><code>show()</code></h4>
+<p>This function showing an element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">show</span>();
+</code></pre>
+<h4><code>hide()</code></h4>
+<p>This function hiding an element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">hide</span>();
+</code></pre>
+<h4><code>toggleShow()</code></h4>
+<p>This function switching between <code>show()</code> and <code>hide()</code></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">element.<span class="hljs-title function_">toggleShow</span>();
+</code></pre>
+<h3>Extended functiality of <code>NodeList</code> and <code>HTMLCollection</code></h3>
+<p>Both classes <code>NodeList</code> and <code>HTMLCollection</code> has more funtionality by adding same functions of <code>Array</code> and more.</p>
+<h4><code>forEach((element, index)=&gt;{})</code></h4>
+<p>See <code>Array.prototype.foreach</code>;</p>
+<h4><code>map((element)=&gt;{})</code></h4>
+<p>See <code>Array.prototype.map</code>;</p>
+<h4><code>filter((element)=&gt;{})</code></h4>
+<p>See <code>Array.prototype.filter</code>;</p>
+<h4><code>first()</code></h4>
+<p>Retures the first element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">nodeList.<span class="hljs-title function_">first</span>();
+<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>).<span class="hljs-title function_">first</span>(); <span class="hljs-comment">//find returns a NodeList with all div&#x27;s and by .first() returns only the first element</span>
+</code></pre>
+<h4><code>last()</code></h4>
+<p>Retures the last element.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+</table>
+<pre><code class="hljs language-javascript">nodeList.<span class="hljs-title function_">last</span>();
+<span class="hljs-title function_">find</span>(<span class="hljs-string">&quot;div&quot;</span>).<span class="hljs-title function_">first</span>(); <span class="hljs-comment">//find returns a NodeList with all div&#x27;s and by .last() returns only the last element</span>
+</code></pre>
+<h4>delegate function call</h4>
+<p>At <code>NodeList</code> and <code>HTMLCollection</code> you can call any function of <code>HTMLElement</code> and <code>HTMLInputElement</code> except functions there availabe on <code>NodeList</code> or <code>HTMLCollection</code>.</p>
+<pre><code class="hljs language-javascript">nodeList.<span class="hljs-title function_">show</span>();
+<span class="hljs-comment">// same like</span>
+<span class="hljs-keyword">for</span>(element <span class="hljs-keyword">of</span> nodeList)
+  element.<span class="hljs-title function_">show</span>();
+</code></pre>
+<h2>License</h2>
+<p><a href="LICENSE">MIT</a></p>

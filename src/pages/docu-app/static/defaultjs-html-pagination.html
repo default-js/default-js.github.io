@@ -1,0 +1,72 @@
+<h1>defaultjs-html-pagination</h1>
+<ul>
+<li><a href="#defaultjs-html-pagination">defaultjs-html-pagination</a>
+<ul>
+<li><a href="#how-to-include">How to include</a>
+<ul>
+<li><a href="#npm">NPM</a></li>
+<li><a href="#html---script-tag">HTML - Script Tag</a></li>
+</ul>
+</li>
+<li><a href="#how-to-use">How to Use</a></li>
+<li><a href="#events">Events</a>
+<ul>
+<li><a href="#d-paginationto-page"><code>d-pagination:to-page</code></a></li>
+</ul>
+</li>
+<li><a href="#javascript-api">Javascript API</a></li>
+</ul>
+</li>
+</ul>
+<h2>How to include</h2>
+<h3>NPM</h3>
+<pre><code class="hljs language-console">npm install @default-js/defaultjs-html-pagaination
+</code></pre>
+<pre><code class="hljs language-javascript">include {<span class="hljs-title class_">HTMLPaginationElement</span>} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@default-js/defaultjs-html-pagaination&quot;</span>;
+</code></pre>
+<h3>HTML - Script Tag</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;[path-to-js]/browser-bundle-defaultjs-html-pagination.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h2>How to Use</h2>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-pagination</span> 
+    <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;[current page]&quot;</span> 
+    <span class="hljs-attr">count</span>=<span class="hljs-string">&quot;[count of pages]&quot;</span> 
+    <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;[size of clickable page items]&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">d-pagination</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">d-pagination</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">count</span>=<span class="hljs-string">&quot;30&quot;</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;5&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-pagination</span>&gt;</span>
+</code></pre>
+<h2>Events</h2>
+<h3><code>d-pagination:to-page</code></h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">d-pagination</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">count</span>=<span class="hljs-string">&quot;30&quot;</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;5&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">d-pagination</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs language-javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;d-pagination:to-page&quot;</span>(event) =&gt; {
+    <span class="hljs-keyword">const</span> page = event.<span class="hljs-property">detail</span>;
+});
+</code></pre>
+<h2>Javascript API</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page</td>
+<td></td>
+<td>current page</td>
+</tr>
+<tr>
+<td>count</td>
+<td></td>
+<td>count of pages</td>
+</tr>
+<tr>
+<td>size</td>
+<td></td>
+<td>size of displayed pages</td>
+</tr>
+</tbody>
+</table>
