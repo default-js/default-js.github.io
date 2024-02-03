@@ -2,5 +2,7 @@
 <div>
 	<a href="https://github.com/default-js/${$context.repo}" target="_blank">repository on Github</a>
 </div>
-<article class="markdown-content" jstl-include="static/docu-app/${$context.repo}.html"></article>
+<article class="markdown-content" xjstl-include="static/docu-app/${$context.repo}.html">
+	<d-renderer template="static/docu-app/${$context.repo}.html" render-mode="self-replace" include-only></d-renderer>
+</article>
 </div>

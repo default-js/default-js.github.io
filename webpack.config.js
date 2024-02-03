@@ -153,6 +153,7 @@ export default async (env, argv) => {
 			],
 		},
 		devServer: {
+			port: 3000,
 			allowedHosts: "all",
 			client: {
 				overlay: true,
