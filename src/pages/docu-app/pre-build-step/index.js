@@ -34,7 +34,8 @@ const downloadMarkdownFile = async (repo, { dest }) => {
 	try {
 		const mdfile = await getMarkdownData(repo);
 		const rendered = await markdown.render(mdfile);
-		await writeFile(`${dest}/${repo.name}.html`, rendered, "utf-8");
+		
+		await writeFile(`${dest}/${repo.name}.html`, `<div jstl-ignore>${rendered}</div>`, "utf-8");
 	} catch (e) {
 		console.error(e.message);
 	}
