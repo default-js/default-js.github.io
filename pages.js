@@ -1,8 +1,7 @@
 const config = [
     { 
         "type": "page",
-        "name": "docu-app",
-        "preBuildStep" : "pre-build-step/index.js"
+        "name": "docu-app"
 
     },
     { 

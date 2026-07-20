@@ -1,8 +1,15 @@
-<div class="container">
-<div>
-	<a href="https://github.com/default-js/${$context.repo}" target="_blank">repository on Github</a>
-</div>
-<article class="markdown-content" xjstl-include="static/docu-app/${$context.repo}.html">
-	<d-renderer template="static/docu-app/${$context.repo}.html" render-mode="self-replace" include-only></d-renderer>
-</article>
+<div class="container" jstl-data="${REPOSITORIES[$context.repo]}" jstl-data-var="repo" jstl-data-mode="set">
+	<nav class="nav nav-horizontal">
+		<div style="display: flex; gap:.5rem">
+			<label for="branch-select">Version:</label>
+			<select id="branch-select" jstl-foreach="${Object.getOwnPropertyNames(repo.branches)}" jstl-foreach-var="branch">
+				<option value="${repo.branches[branch].readme}" ?selected="${branch === repo.main}">${branch}</option>				
+			</select>
+		</div>
+		
+		<a style="margin-left: auto;" href="https://github.com/default-js/${repo.name}" target="_blank"><span class="fa-brands fa-github" style="margin-right: .5rem;"></span>repository on Github</a>
+	</nav>
+	<article class="markdown-content">
+		<x-markdown-renderer src="${repo.branches[repo.main].readme}" attach-to="#branch-select"></x-markdown-renderer>
+	</article>
 </div>
