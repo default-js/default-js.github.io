@@ -14,6 +14,7 @@ import "../../css/dropdown.css";
 import "../../css/navigation.css";
 import "../../css/highlight.css";
 import "../../css/layout.css";
+import "../../css/markdown.css";
 
 /*
  * libs
@@ -23,10 +24,14 @@ import "@default-js/defaultjs-app-toolbox";
 import "@default-js/defaultjs-html-renderer";
 import "@default-js/defaultjs-html-dropdown";
 
+
 /*
  * custom scripts
  */
-
+import "./js/setup.js";
 //import "../../js/components/GithubMarkdownRenderServiceElement.js";
 //import "../../js/components/MarkdownRendererElement.js";
+import "../../js/components/MarkdownRendererElement.js";
 import "./js/ExtendedHTMLDetailsElement.js";
+
+

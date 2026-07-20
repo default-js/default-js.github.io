@@ -96,3 +96,12 @@ hr {
 d-renderer[render-mode="self-replace"] {
     display: none;
 }
+
+select {
+    background-color: var(--body-background);
+    color: var(--body-color);
+    border: 1px solid var(--body-border);
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    font-size: small;
+}

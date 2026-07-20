@@ -3,6 +3,12 @@
 	<head>
 		<title>>default-js</title>
 		<%= require('../global/head.html?raw') %>
+
+		<script type="module">
+			globalThis.STRUCTURE = <%= require('./data/structure.json?raw') %>;
+			globalThis.REPOSITORIES = <%= require('./data/repositories.json?raw') %>;
+
+		</script>
 	</head>
 
 	<body>
@@ -10,20 +16,20 @@
 			<h1>@Default-js</h1>
 		</template>
 		<d-application route="home">
-			<d-renderer data="/data/docu-app/structure.json" render-mode="self-replace">
+			<d-renderer render-mode="self-replace">
 				<header id="page-header">
 					<d-route id="header-home" name="home" template="#home-template">
-						<h3>${title}</h3>
+						<h3>${STRUCTURE.title}</h3>
 					</d-route>
-					<nav class="nav nav-horizontal for-big-device" jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">
-						<d-dropdown class="nav-item dropdown right" jstl-if="${(group.repos && group.repos.length != 0) || (group.pages && group.pages.length != 0)}">
+					<nav class="nav nav-horizontal for-big-device" jstl-foreach="${STRUCTURE.groups}" jstl-foreach-var="group" jstl-status-var="status">
+						<d-dropdown class="nav-item dropdown right" jstl-if="${(group?.repos?.length != 0) || (group?.pages?.length != 0)}">
 							${group.title}
 							<d-dropdown-content>
 								<nav class="nav nav-vertical">
-									<jstl jstl-if="${group.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+									<jstl jstl-if="${group?.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
 										<d-route class="nav-item" name="${repo}" template="/templates/docu-app/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
 									</jstl>
-									<jstl jstl-if="${group.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
+									<jstl jstl-if="${group?.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
 										<a class="nav-item" href="${page.url}" target="_blank">${page.title}</a>
 									</jstl>
 								</nav>
@@ -32,15 +38,15 @@
 					</nav>
 					<d-dropdown class="nav nav-vertical dropdown right for-small-device">
 						<i class="fa-solid fa-bars"></i>
-						<d-dropdown-content jstl-foreach="${groups}" jstl-foreach-var="group" jstl-status-var="status">							
-								<details jstl-if="${(group.repos && group.repos.length != 0) || (group.pages && group.pages.length != 0)}" is="app-details">
+						<d-dropdown-content jstl-foreach="${STRUCTURE.groups}" jstl-foreach-var="group" jstl-status-var="status">							
+								<details jstl-if="${group?.repos?.length != 0 || group?.pages?.length != 0}" is="app-details">
 									<summary>${group.title}</summary>
 								
 									<nav class="nav nav-vertical">
-										<jstl jstl-if="${group.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
+										<jstl jstl-if="${group?.repos}" jstl-foreach="${group.repos}" jstl-foreach-var="repo">
 											<d-route class="nav-item" name="${repo}" template="/templates/docu-app/repository.view.tpl.html" context="{'repo':'${repo}'}" stateful>${repo}</d-route>
 										</jstl>
-										<jstl jstl-if="${group.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
+										<jstl jstl-if="${group?.pages}" jstl-foreach="${group.pages}" jstl-foreach-var="page">
 											<a class="nav-item" href="${page.url}" target="_blank">${page.title}</a>
 										</jstl>
 									</nav>

@@ -1,0 +1,336 @@
+{
+    ".github":  {
+                    "name":  ".github",
+                    "main":  "main",
+                    "branches":  {
+                                     "main":  {
+                                                  "url":  "https://github.com/default-js/.github/tree/main",
+                                                  "readme":  "https://raw.githubusercontent.com/default-js/.github/main/README.md",
+                                                  "package":  "https://raw.githubusercontent.com/default-js/.github/main/package.json"
+                                              }
+                                 }
+                },
+    "default-js.github.io":  {
+                                 "name":  "default-js.github.io",
+                                 "main":  "main",
+                                 "branches":  {
+                                                  "main":  {
+                                                               "url":  "https://github.com/default-js/default-js.github.io/tree/main",
+                                                               "readme":  "https://raw.githubusercontent.com/default-js/default-js.github.io/main/README.md",
+                                                               "package":  "https://raw.githubusercontent.com/default-js/default-js.github.io/main/package.json"
+                                                           }
+                                              }
+                             },
+    "defaultjs-app-toolbox":  {
+                                  "name":  "defaultjs-app-toolbox",
+                                  "main":  "master",
+                                  "branches":  {
+                                                   "master":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-app-toolbox/tree/master",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-app-toolbox/master/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-app-toolbox/master/package.json"
+                                                              }
+                                               }
+                              },
+    "defaultjs-common-utils":  {
+                                   "name":  "defaultjs-common-utils",
+                                   "main":  "master",
+                                   "branches":  {
+                                                    "master":  {
+                                                                   "url":  "https://github.com/default-js/defaultjs-common-utils/tree/master",
+                                                                   "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-common-utils/master/README.md",
+                                                                   "package":  "https://raw.githubusercontent.com/default-js/defaultjs-common-utils/master/package.json"
+                                                               }
+                                                }
+                               },
+    "defaultjs-dynamic-requester":  {
+                                        "name":  "defaultjs-dynamic-requester",
+                                        "main":  "master",
+                                        "branches":  {
+                                                         "master":  {
+                                                                        "url":  "https://github.com/default-js/defaultjs-dynamic-requester/tree/master",
+                                                                        "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-dynamic-requester/master/README.md",
+                                                                        "package":  "https://raw.githubusercontent.com/default-js/defaultjs-dynamic-requester/master/package.json"
+                                                                    }
+                                                     }
+                                    },
+    "defaultjs-expression-language":  {
+                                          "name":  "defaultjs-expression-language",
+                                          "main":  "master",
+                                          "branches":  {
+                                                           "master":  {
+                                                                          "url":  "https://github.com/default-js/defaultjs-expression-language/tree/master",
+                                                                          "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-expression-language/master/README.md",
+                                                                          "package":  "https://raw.githubusercontent.com/default-js/defaultjs-expression-language/master/package.json"
+                                                                      }
+                                                       }
+                                      },
+    "defaultjs-extdom":  {
+                             "name":  "defaultjs-extdom",
+                             "main":  "master",
+                             "branches":  {
+                                              "2.0.0":  {
+                                                            "url":  "https://github.com/default-js/defaultjs-extdom/tree/2.0.0",
+                                                            "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-extdom/2.0.0/README.md",
+                                                            "package":  "https://raw.githubusercontent.com/default-js/defaultjs-extdom/2.0.0/package.json"
+                                                        },
+                                              "master":  {
+                                                             "url":  "https://github.com/default-js/defaultjs-extdom/tree/master",
+                                                             "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/README.md",
+                                                             "package":  "https://raw.githubusercontent.com/default-js/defaultjs-extdom/master/package.json"
+                                                         }
+                                          }
+                         },
+    "defaultjs-fetch-extentions":  {
+                                       "name":  "defaultjs-fetch-extentions",
+                                       "main":  "main",
+                                       "branches":  {
+                                                        "main":  {
+                                                                     "url":  "https://github.com/default-js/defaultjs-fetch-extentions/tree/main",
+                                                                     "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-fetch-extentions/main/README.md",
+                                                                     "package":  "https://raw.githubusercontent.com/default-js/defaultjs-fetch-extentions/main/package.json"
+                                                                 }
+                                                    }
+                                   },
+    "defaultjs-html-button":  {
+                                  "name":  "defaultjs-html-button",
+                                  "main":  "main",
+                                  "branches":  {
+                                                   "main":  {
+                                                                "url":  "https://github.com/default-js/defaultjs-html-button/tree/main",
+                                                                "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-button/main/README.md",
+                                                                "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-button/main/package.json"
+                                                            }
+                                               }
+                              },
+    "defaultjs-html-components":  {
+                                      "name":  "defaultjs-html-components",
+                                      "main":  "master",
+                                      "branches":  {
+                                                       "master":  {
+                                                                      "url":  "https://github.com/default-js/defaultjs-html-components/tree/master",
+                                                                      "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/master/README.md",
+                                                                      "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/master/package.json"
+                                                                  }
+                                                   }
+                                  },
+    "defaultjs-html-downloader":  {
+                                      "name":  "defaultjs-html-downloader",
+                                      "main":  "main",
+                                      "branches":  {
+                                                       "main":  {
+                                                                    "url":  "https://github.com/default-js/defaultjs-html-downloader/tree/main",
+                                                                    "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-downloader/main/README.md",
+                                                                    "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-downloader/main/package.json"
+                                                                }
+                                                   }
+                                  },
+    "defaultjs-html-dropdown":  {
+                                    "name":  "defaultjs-html-dropdown",
+                                    "main":  "main",
+                                    "branches":  {
+                                                     "main":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-html-dropdown/tree/main",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-dropdown/main/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-dropdown/main/package.json"
+                                                              }
+                                                 }
+                                },
+    "defaultjs-html-form":  {
+                                "name":  "defaultjs-html-form",
+                                "main":  "master",
+                                "branches":  {
+                                                 "master":  {
+                                                                "url":  "https://github.com/default-js/defaultjs-html-form/tree/master",
+                                                                "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form/master/README.md",
+                                                                "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form/master/package.json"
+                                                            }
+                                             }
+                            },
+    "defaultjs-html-form-extfields":  {
+                                          "name":  "defaultjs-html-form-extfields",
+                                          "main":  "master",
+                                          "branches":  {
+                                                           "master":  {
+                                                                          "url":  "https://github.com/default-js/defaultjs-html-form-extfields/tree/master",
+                                                                          "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form-extfields/master/README.md",
+                                                                          "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form-extfields/master/package.json"
+                                                                      }
+                                                       }
+                                      },
+    "defaultjs-html-form-tag-field":  {
+                                          "name":  "defaultjs-html-form-tag-field",
+                                          "main":  "main",
+                                          "branches":  {
+                                                           "main":  {
+                                                                        "url":  "https://github.com/default-js/defaultjs-html-form-tag-field/tree/main",
+                                                                        "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form-tag-field/main/README.md",
+                                                                        "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-form-tag-field/main/package.json"
+                                                                    }
+                                                       }
+                                      },
+    "defaultjs-html-jsondata":  {
+                                    "name":  "defaultjs-html-jsondata",
+                                    "main":  "main",
+                                    "branches":  {
+                                                     "main":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-html-jsondata/tree/main",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-jsondata/main/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-jsondata/main/package.json"
+                                                              }
+                                                 }
+                                },
+    "defaultjs-html-load-marker":  {
+                                       "name":  "defaultjs-html-load-marker",
+                                       "main":  "main",
+                                       "branches":  {
+                                                        "main":  {
+                                                                     "url":  "https://github.com/default-js/defaultjs-html-load-marker/tree/main",
+                                                                     "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-load-marker/main/README.md",
+                                                                     "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-load-marker/main/package.json"
+                                                                 }
+                                                    }
+                                   },
+    "defaultjs-html-mixins":  {
+                                  "name":  "defaultjs-html-mixins",
+                                  "main":  "main",
+                                  "branches":  {
+                                                   "main":  {
+                                                                "url":  "https://github.com/default-js/defaultjs-html-mixins/tree/main",
+                                                                "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-mixins/main/README.md",
+                                                                "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-mixins/main/package.json"
+                                                            }
+                                               }
+                              },
+    "defaultjs-html-modal":  {
+                                 "name":  "defaultjs-html-modal",
+                                 "main":  "main",
+                                 "branches":  {
+                                                  "main":  {
+                                                               "url":  "https://github.com/default-js/defaultjs-html-modal/tree/main",
+                                                               "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-modal/main/README.md",
+                                                               "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-modal/main/package.json"
+                                                           }
+                                              }
+                             },
+    "defaultjs-html-notification":  {
+                                        "name":  "defaultjs-html-notification",
+                                        "main":  "main",
+                                        "branches":  {
+                                                         "main":  {
+                                                                      "url":  "https://github.com/default-js/defaultjs-html-notification/tree/main",
+                                                                      "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-notification/main/README.md",
+                                                                      "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-notification/main/package.json"
+                                                                  }
+                                                     }
+                                    },
+    "defaultjs-html-pagination":  {
+                                      "name":  "defaultjs-html-pagination",
+                                      "main":  "main",
+                                      "branches":  {
+                                                       "main":  {
+                                                                    "url":  "https://github.com/default-js/defaultjs-html-pagination/tree/main",
+                                                                    "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-pagination/main/README.md",
+                                                                    "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-pagination/main/package.json"
+                                                                }
+                                                   }
+                                  },
+    "defaultjs-html-popover":  {
+                                   "name":  "defaultjs-html-popover",
+                                   "main":  "main",
+                                   "branches":  {
+                                                    "main":  {
+                                                                 "url":  "https://github.com/default-js/defaultjs-html-popover/tree/main",
+                                                                 "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-popover/main/README.md",
+                                                                 "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-popover/main/package.json"
+                                                             }
+                                                }
+                               },
+    "defaultjs-html-renderer":  {
+                                    "name":  "defaultjs-html-renderer",
+                                    "main":  "main",
+                                    "branches":  {
+                                                     "main":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-html-renderer/tree/main",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-renderer/main/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-renderer/main/package.json"
+                                                              }
+                                                 }
+                                },
+    "defaultjs-html-request":  {
+                                   "name":  "defaultjs-html-request",
+                                   "main":  "main",
+                                   "branches":  {
+                                                    "main":  {
+                                                                 "url":  "https://github.com/default-js/defaultjs-html-request/tree/main",
+                                                                 "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-request/main/README.md",
+                                                                 "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-request/main/package.json"
+                                                             }
+                                                }
+                               },
+    "defaultjs-html-typeahead":  {
+                                     "name":  "defaultjs-html-typeahead",
+                                     "main":  "main",
+                                     "branches":  {
+                                                      "main":  {
+                                                                   "url":  "https://github.com/default-js/defaultjs-html-typeahead/tree/main",
+                                                                   "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-typeahead/main/README.md",
+                                                                   "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-typeahead/main/package.json"
+                                                               }
+                                                  }
+                                 },
+    "defaultjs-httpinterceptor":  {
+                                      "name":  "defaultjs-httpinterceptor",
+                                      "main":  "master",
+                                      "branches":  {
+                                                       "master":  {
+                                                                      "url":  "https://github.com/default-js/defaultjs-httpinterceptor/tree/master",
+                                                                      "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-httpinterceptor/master/README.md",
+                                                                      "package":  "https://raw.githubusercontent.com/default-js/defaultjs-httpinterceptor/master/package.json"
+                                                                  }
+                                                   }
+                                  },
+    "defaultjs-ical":  {
+                           "name":  "defaultjs-ical",
+                           "main":  "master",
+                           "branches":  {
+                                            "1.0.x":  {
+                                                          "url":  "https://github.com/default-js/defaultjs-ical/tree/1.0.x",
+                                                          "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-ical/1.0.x/README.md",
+                                                          "package":  "https://raw.githubusercontent.com/default-js/defaultjs-ical/1.0.x/package.json"
+                                                      },
+                                            "master":  {
+                                                           "url":  "https://github.com/default-js/defaultjs-ical/tree/master",
+                                                           "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-ical/master/README.md",
+                                                           "package":  "https://raw.githubusercontent.com/default-js/defaultjs-ical/master/package.json"
+                                                       }
+                                        }
+                       },
+    "defaultjs-logging":  {
+                              "name":  "defaultjs-logging",
+                              "main":  "master",
+                              "branches":  {
+                                               "1.0.x":  {
+                                                             "url":  "https://github.com/default-js/defaultjs-logging/tree/1.0.x",
+                                                             "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-logging/1.0.x/README.md",
+                                                             "package":  "https://raw.githubusercontent.com/default-js/defaultjs-logging/1.0.x/package.json"
+                                                         },
+                                               "master":  {
+                                                              "url":  "https://github.com/default-js/defaultjs-logging/tree/master",
+                                                              "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-logging/master/README.md",
+                                                              "package":  "https://raw.githubusercontent.com/default-js/defaultjs-logging/master/package.json"
+                                                          }
+                                           }
+                          },
+    "defaultjs-template-language":  {
+                                        "name":  "defaultjs-template-language",
+                                        "main":  "master",
+                                        "branches":  {
+                                                         "master":  {
+                                                                        "url":  "https://github.com/default-js/defaultjs-template-language/tree/master",
+                                                                        "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-template-language/master/README.md",
+                                                                        "package":  "https://raw.githubusercontent.com/default-js/defaultjs-template-language/master/package.json"
+                                                                    }
+                                                     }
+                                    }
+}
