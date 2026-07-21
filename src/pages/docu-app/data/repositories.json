@@ -111,7 +111,17 @@
                                                                       "url":  "https://github.com/default-js/defaultjs-html-components/tree/master",
                                                                       "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/master/README.md",
                                                                       "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/master/package.json"
-                                                                  }
+                                                                  },
+                                                       "v2":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-html-components/tree/v2",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/v2/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/v2/package.json"
+                                                              },
+                                                       "v3":  {
+                                                                  "url":  "https://github.com/default-js/defaultjs-html-components/tree/v3",
+                                                                  "readme":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/v3/README.md",
+                                                                  "package":  "https://raw.githubusercontent.com/default-js/defaultjs-html-components/v3/package.json"
+                                                              }
                                                    }
                                   },
     "defaultjs-html-downloader":  {
