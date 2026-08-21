@@ -5,12 +5,16 @@
 .DESCRIPTION
 	Laeuft ohne Authentifizierung und liest ausschliesslich oeffentliche Daten.
 
-	Default-Branch und Branches werden ueber "git ls-remote" aus dem Git-Protokoll
-	gelesen und kosten kein API-Kontingent; die URLs werden lokal zusammengesetzt.
-	Lediglich die Repository-Liste kommt aus der GitHub-API - dafuer gibt es kein
-	Git-Kommando, da "git ls-remote" immer eine konkrete Repository-URL braucht.
-	Das ist 1 Request pro 100 Repositories, anonym stehen 60 Requests/Stunde pro
-	IP zur Verfuegung.
+	Default-Branch und Release-Tags werden ueber "git ls-remote" aus dem
+	Git-Protokoll gelesen und kosten kein API-Kontingent; die URLs werden lokal
+	zusammengesetzt. Lediglich die Repository-Liste kommt aus der GitHub-API -
+	dafuer gibt es kein Git-Kommando, da "git ls-remote" immer eine konkrete
+	Repository-URL braucht. Das ist 1 Request pro 100 Repositories, anonym stehen
+	60 Requests/Stunde pro IP zur Verfuegung.
+
+	Das Feld heisst weiterhin "branches", weil die Doku-App es so liest; sein
+	Inhalt ist die Versionsauswahl: der Default-Branch als aktuelle Fassung, dazu
+	je ein Release-Tag. Andere Branches erscheinen nicht.
 
 	Optional hebt die Umgebungsvariable GITHUB_TOKEN das Limit auf 5000
 	Requests/Stunde; fuer oeffentliche Daten genuegt ein Personal Access Token
@@ -37,6 +41,11 @@
 	        "url": "https://github.com/<org>/<repo>/tree/master",
 	        "readme": "https://raw.githubusercontent.com/<org>/<repo>/master/README.md",
 	        "package": "https://raw.githubusercontent.com/<org>/<repo>/master/package.json"
+	      },
+	      "2.0.0": {
+	        "url": "https://github.com/<org>/<repo>/tree/2.0.0",
+	        "readme": "https://raw.githubusercontent.com/<org>/<repo>/2.0.0/README.md",
+	        "package": "https://raw.githubusercontent.com/<org>/<repo>/2.0.0/package.json"
 	      }
 	    }
 	  }
@@ -141,14 +150,28 @@ function Get-ApiErrorMessage {
 }
 
 <#
-	Liest Default-Branch und Branch-Namen eines Repositories ueber git aus.
+	Liest Default-Branch, Branch-Namen und Release-Tags eines Repositories ueber git aus.
 
 	"git ls-remote --symref" liefert zuerst die Aufloesung von HEAD auf den
-	Default-Branch und danach je eine Zeile "<sha><TAB><ref>" pro Branch:
+	Default-Branch und danach je eine Zeile "<sha><TAB><ref>" pro Ref:
 
 	  ref: refs/heads/master	HEAD
 	  0a84961...	HEAD
 	  0a84961...	refs/heads/master
+	  753d80b...	refs/tags/2.0.0
+
+	Als Version zaehlt der Tag, nicht der Branch: ein Tag ist unveraenderlich und
+	bezeichnet genau den Stand, der unter dieser Versionsnummer veroeffentlicht
+	wurde. Von den Branches wird darum nur noch der Default-Branch uebernommen -
+	er ist die aktuelle Fassung. Arbeitsbranches bleiben damit unsichtbar, egal
+	wie sie heissen.
+
+	Ein annotierter Tag erzeugt zusaetzlich eine Zeile "refs/tags/<name>^{}" mit
+	dem Commit, auf den er zeigt. Die faellt durch das Anker-Zeichen am Ende des
+	Musters heraus; gezaehlt wird jeder Tag nur einmal.
+
+	Vorabversionen wie "3.0.0-beta.1" werden bewusst nicht aufgenommen - die
+	Versionsauswahl der Doku-App zeigt, was benutzbar ist.
 #>
 function Get-RepositoryRef {
 	param(
@@ -159,12 +182,13 @@ function Get-RepositoryRef {
 	$url = "https://github.com/$Organization/$Repository.git"
 
 	# stderr wird verworfen, damit Fortschrittsmeldungen von git die Ausgabe nicht stoeren.
-	$output = & git ls-remote --symref $url HEAD 'refs/heads/*' 2>$null
+	$output = & git ls-remote --symref $url HEAD 'refs/heads/*' 'refs/tags/*' 2>$null
 
 	if ($LASTEXITCODE -ne 0) { return $null }
 
 	$main = $null
 	$branches = New-Object System.Collections.Generic.List[string]
+	$tags = New-Object System.Collections.Generic.List[string]
 
 	foreach ($line in $output) {
 		Write-Host "    $line"
@@ -172,8 +196,12 @@ function Get-RepositoryRef {
 			$main = $Matches[1]
 			continue
 		}
-		if ($line -match '^[0-9a-f]+\s+refs\/heads\/(master|main|v?\d+(\.(\d+|x))*)$') {
+		if ($line -match '^[0-9a-f]+\s+refs\/heads\/(master|main)$') {
 			$branches.Add($Matches[1])
+			continue
+		}
+		if ($line -match '^[0-9a-f]+\s+refs\/tags\/(v?\d+\.\d+\.\d+)$') {
+			$tags.Add($Matches[1])
 		}
 	}
 
@@ -181,13 +209,17 @@ function Get-RepositoryRef {
 
 		Main     = $main
 		Branches = $branches
+		Tags     = $tags
 	}
 }
 
 <#
-	Baut den JSON-Eintrag eines Repositories: Default-Branch plus je Branch die
-	drei URLs. Die URLs werden konstruiert, nicht auf Existenz geprueft - ein
-	Branch ohne README.md oder package.json bekommt trotzdem einen Eintrag.
+	Baut den JSON-Eintrag eines Repositories: Default-Branch plus je Ref die drei
+	URLs. Die URLs werden konstruiert, nicht auf Existenz geprueft - ein Ref ohne
+	README.md oder package.json bekommt trotzdem einen Eintrag.
+
+	Die Reihenfolge im "branches"-Objekt ist die Reihenfolge im Auswahlfeld der
+	Doku-App: erst der Default-Branch, dann die Versionen absteigend.
 #>
 function New-RepositoryEntry {
 	param(
@@ -198,11 +230,25 @@ function New-RepositoryEntry {
 
 	$branches = [ordered]@{}
 
+	# Der Default-Branch muss enthalten sein - die Doku-App rendert beim Aufruf
+	# der Seite "branches[main].readme", bevor ueberhaupt etwas ausgewaehlt wurde.
+	$names = New-Object System.Collections.Generic.List[string]
+	if ($Refs.Main) { $names.Add($Refs.Main) }
 	foreach ($branch in $Refs.Branches) {
-		$branches[$branch] = [ordered]@{
-			url     = "https://github.com/$Organization/$Repository/tree/$branch"
-			readme  = "$Raw/$Organization/$Repository/$branch/$ReadmeFile"
-			package = "$Raw/$Organization/$Repository/$branch/$PackageFile"
+		if (-not $names.Contains($branch)) { $names.Add($branch) }
+	}
+
+	# "v" wird nur zum Sortieren abgeschnitten, der Ref-Name behaelt es.
+	$sortedTags = $Refs.Tags | Sort-Object -Property @{ Expression = { [version]($_ -replace '^v', '') } } -Descending
+	foreach ($tag in $sortedTags) {
+		if (-not $names.Contains($tag)) { $names.Add($tag) }
+	}
+
+	foreach ($name in $names) {
+		$branches[$name] = [ordered]@{
+			url     = "https://github.com/$Organization/$Repository/tree/$name"
+			readme  = "$Raw/$Organization/$Repository/$name/$ReadmeFile"
+			package = "$Raw/$Organization/$Repository/$name/$PackageFile"
 		}
 	}
 
@@ -236,8 +282,8 @@ foreach ($name in $repoNames) {
 		continue
 	}
 
-	# Repository ohne Commits: kein HEAD, keine Branches.
-	if ($refs.Branches.Count -eq 0) {
+	# Repository ohne Commits: kein HEAD, also auch kein Default-Branch.
+	if (-not $refs.Main) {
 		Write-Host "  leer: $name"
 	}
 	else {
