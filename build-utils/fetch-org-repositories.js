@@ -3,8 +3,9 @@
  *
  * Laeuft ohne Authentifizierung und liest ausschliesslich oeffentliche Daten.
  *
- * Default-Branch und Branches werden ueber "git ls-remote" aus dem Git-Protokoll
- * gelesen und kosten kein API-Kontingent; die URLs werden lokal zusammengesetzt.
+ * Aufgenommen werden nur der Default-Branch und die Tags (GitHub-Releases haengen
+ * immer an einem Tag). Default-Branch und Tags werden ueber "git ls-remote" aus
+ * dem Git-Protokoll gelesen und kosten kein API-Kontingent; die URLs werden lokal zusammengesetzt.
  * Lediglich die Repository-Liste kommt aus der GitHub-API - dafuer gibt es kein
  * Git-Kommando, da "git ls-remote" immer eine konkrete Repository-URL braucht.
  * Das ist 1 Request pro 100 Repositories, anonym stehen 60 Requests/Stunde pro
@@ -30,6 +31,10 @@
  *           "url": "https://github.com/<org>/<repo>/tree/master",
  *           "readme": "https://raw.githubusercontent.com/<org>/<repo>/master/README.md",
  *           "package": "https://raw.githubusercontent.com/<org>/<repo>/master/package.json"
+ *         },
+ *         "2.0.1": {
+ *           "url": "https://github.com/<org>/<repo>/tree/2.0.1",
+ *           ...
  *         }
  *       }
  *     }
@@ -111,14 +116,18 @@ const getRepositoryNames = async (organization) => {
 };
 
 /**
- * Liest Default-Branch und Branch-Namen eines Repositories ueber git aus.
+ * Liest Default-Branch und Tags eines Repositories ueber git aus.
  *
  * "git ls-remote --symref" liefert zuerst die Aufloesung von HEAD auf den
- * Default-Branch und danach je eine Zeile "<sha><TAB><ref>" pro Branch:
+ * Default-Branch und danach je eine Zeile "<sha><TAB><ref>" pro Tag. Annotierte
+ * Tags erscheinen zusaetzlich mit "^{}" (aufgeloester Commit) und werden ignoriert:
  *
  *   ref: refs/heads/master	HEAD
  *   0a84961...	HEAD
- *   0a84961...	refs/heads/master
+ *   753d80b...	refs/tags/2.0.0
+ *   1f3c2a9...	refs/tags/2.0.0^{}
+ *
+ * Tags werden absteigend nach Version sortiert (neueste zuerst).
  *
  * Liefert null, wenn das Repository nicht lesbar ist.
  */
@@ -129,7 +138,7 @@ const getRepositoryRefs = async (organization, repository) => {
 	try {
 		// GIT_TERMINAL_PROMPT=0 verhindert, dass git bei einem nicht erreichbaren
 		// Repository nach Zugangsdaten fragt und das Script haengen bleibt.
-		({ stdout } = await execFileAsync("git", ["ls-remote", "--symref", url, "HEAD", "refs/heads/*"], {
+		({ stdout } = await execFileAsync("git", ["ls-remote", "--symref", url, "HEAD", "refs/tags/*"], {
 			env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
 		}));
 	} catch {
@@ -137,7 +146,7 @@ const getRepositoryRefs = async (organization, repository) => {
 	}
 
 	let main = null;
-	const branches = [];
+	const tags = [];
 
 	for (const line of stdout.split(/\r?\n/)) {
 		let match = line.match(/^ref:\s+refs\/heads\/(.+?)\s+HEAD$/);
@@ -145,26 +154,30 @@ const getRepositoryRefs = async (organization, repository) => {
 			main = match[1];
 			continue;
 		}
-		match = line.match(/^[0-9a-f]+\s+refs\/heads\/(master|main|v?\d+(\.(\d+|x))*)$/i);
-		if (match) branches.push(match[1]);
+		match = line.match(/^[0-9a-f]+\s+refs\/tags\/(.+)$/);
+		if (match && !match[1].endsWith("^{}")) tags.push(match[1]);
 	}
 
-	return { main, branches };
+	tags.sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+
+	return { main, tags };
 };
 
 /**
- * Baut den JSON-Eintrag eines Repositories: Default-Branch plus je Branch die
- * drei URLs. Die URLs werden konstruiert, nicht auf Existenz geprueft - ein
- * Branch ohne README.md oder package.json bekommt trotzdem einen Eintrag.
+ * Baut den JSON-Eintrag eines Repositories: Default-Branch und Tags mit je drei
+ * URLs unter "branches" (diesen Schluessel liest die Docu-App). Die URLs werden
+ * konstruiert, nicht auf Existenz geprueft - ein Ref ohne README.md oder
+ * package.json bekommt trotzdem einen Eintrag.
  */
 const createRepositoryEntry = (organization, repository, refs) => {
 	const branches = {};
+	const names = refs.main ? [refs.main, ...refs.tags] : refs.tags;
 
-	for (const branch of refs.branches) {
-		branches[branch] = {
-			url: `https://github.com/${organization}/${repository}/tree/${branch}`,
-			readme: `${RAW}/${organization}/${repository}/${branch}/${README_FILE}`,
-			package: `${RAW}/${organization}/${repository}/${branch}/${PACKAGE_FILE}`,
+	for (const name of names) {
+		branches[name] = {
+			url: `https://github.com/${organization}/${repository}/tree/${name}`,
+			readme: `${RAW}/${organization}/${repository}/${name}/${README_FILE}`,
+			package: `${RAW}/${organization}/${repository}/${name}/${PACKAGE_FILE}`,
 		};
 	}
 
@@ -183,7 +196,7 @@ const main = async ({ org, out }) => {
 
 	if (repoNames.length === 0) throw new Error(`Keine oeffentlichen Repositories fuer "${org}" gefunden.`);
 
-	console.log(`${repoNames.length} Repositories gefunden, lade Branches:`);
+	console.log(`${repoNames.length} Repositories gefunden, lade Default-Branch und Tags:`);
 
 	const allRefs = await Promise.all(repoNames.map((name) => getRepositoryRefs(org, name)));
 	const result = {};
@@ -197,8 +210,8 @@ const main = async ({ org, out }) => {
 			return;
 		}
 
-		// Repository ohne Commits: kein HEAD, keine Branches.
-		console.log(refs.branches.length === 0 ? `  leer: ${name}` : `  ${name}`);
+		// Repository ohne Commits: kein HEAD, keine Tags.
+		console.log(refs.main == null ? `  leer: ${name}` : `  ${name} (${refs.tags.length} Tags)`);
 
 		result[name] = createRepositoryEntry(org, name, refs);
 	});
